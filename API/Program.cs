@@ -1,9 +1,18 @@
 using Microsoft.EntityFrameworkCore;
 using MySql.Data.MySqlClient;
 using Persistence;
+using MediatR;
 using System.Configuration;
+using Application.Activities;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Enable logging in Application
+Log.Logger = new LoggerConfiguration()
+.MinimumLevel.Debug()
+//.WriteTo.Console()
+.CreateLogger();
 
 // Add services to the container.
 
@@ -19,14 +28,17 @@ builder.Services.AddDbContext<DataContext>(opt =>
 //builder.Services.AddTransient<MySqlConnection>(_ =>
 //    new MySqlConnection(builder.Configuration.GetConnectionString("DefaultMySql")));
 
+//Updates Cros Policy to run on local host  
 builder.Services.AddCors(opt =>
+{
+    opt.AddPolicy("CorsPolicy", policy =>
     {
-        opt.AddPolicy("CorsPolicy", policy =>
-        {
-            policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3000");
-        });
-    }
-);
+        policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3000");
+    });
+});
+
+// Added Mediator service to Project
+builder.Services.AddMediatR(typeof(List.Handler));
 
 var app = builder.Build();
 
