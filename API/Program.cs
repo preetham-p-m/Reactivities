@@ -9,10 +9,9 @@ using Serilog;
 var builder = WebApplication.CreateBuilder(args);
 
 // Enable logging in Application
-Log.Logger = new LoggerConfiguration()
-.MinimumLevel.Debug()
-//.WriteTo.Console()
-.CreateLogger();
+// Log.Logger = new LoggerConfiguration()
+// .MinimumLevel.Debug()
+// .CreateLogger();
 
 // Add services to the container.
 
