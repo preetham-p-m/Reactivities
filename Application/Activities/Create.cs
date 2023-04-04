@@ -1,7 +1,5 @@
 ﻿using Domain;
-using Google.Protobuf.WellKnownTypes;
 using MediatR;
-using Microsoft.Extensions.Logging;
 using Persistence;
 
 namespace Application.Activities;
