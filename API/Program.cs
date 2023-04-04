@@ -1,43 +1,13 @@
 using Microsoft.EntityFrameworkCore;
-using MySql.Data.MySqlClient;
 using Persistence;
-using MediatR;
-using System.Configuration;
-using Application.Activities;
-using Serilog;
+using API.Extension;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Enable logging in Application
-// Log.Logger = new LoggerConfiguration()
-// .MinimumLevel.Debug()
-// .CreateLogger();
-
 // Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<DataContext>(opt =>
-{
-    opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultSqlLite"));
-});
-
-//builder.Services.AddTransient<MySqlConnection>(_ =>
-//    new MySqlConnection(builder.Configuration.GetConnectionString("DefaultMySql")));
-
-//Updates Cros Policy to run on local host  
-builder.Services.AddCors(opt =>
-{
-    opt.AddPolicy("CorsPolicy", policy =>
-    {
-        policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3000");
-    });
-});
-
-// Added Mediator service to Project
-builder.Services.AddMediatR(typeof(List.Handler));
+builder.Services.AddApplicationServices(builder.Configuration);
 
 var app = builder.Build();
 
