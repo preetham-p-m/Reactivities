@@ -16,9 +16,9 @@ public class List
         {
             _context = context;
         }
+
         public async Task<List<Activity>> Handle(Query request, CancellationToken cancellationToken)
         {
-            Log.Information("");
             return await _context.Activities.ToListAsync(); ;
         }
     }

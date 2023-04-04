@@ -1,8 +1,6 @@
 {
     "version": "0.2.0",
     "configurations": [
-
-
         {
             // Use IntelliSense to find out which attributes exist for C# debugging
             // Use hover for the description of the existing attributes
@@ -28,5 +26,11 @@
                 "/Views": "${workspaceFolder}/Views"
             }
         },
+        {
+            "name": ".NET Core Attach",
+            "type": "coreclr",
+            "request": "attach",
+            "processId": "${command:pickProcess}"
+        }
     ]
 }
