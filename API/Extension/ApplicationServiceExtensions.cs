@@ -16,10 +16,8 @@ public static class ApplicationServiceExtensions
         services.AddDbContext<DataContext>(opt =>
         {
             opt.UseSqlite(configuration.GetConnectionString("DefaultSqlLite"));
+            // opt.UseMySql(configuration.GetConnectionString("DefaultMySql"), new MySqlServerVersion(new Version()));
         });
-
-        //services.AddTransient<MySqlConnection>(_ =>
-        //    new MySqlConnection(sonfiguration.GetConnectionString("DefaultMySql")));
 
         //Updates Cros Policy to run on local host  
         services.AddCors(opt =>
