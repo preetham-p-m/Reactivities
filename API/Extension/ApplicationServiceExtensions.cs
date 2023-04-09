@@ -15,8 +15,8 @@ public static class ApplicationServiceExtensions
         services.AddSwaggerGen();
         services.AddDbContext<DataContext>(opt =>
         {
-            opt.UseSqlite(configuration.GetConnectionString("DefaultSqlLite"));
-            // opt.UseMySql(configuration.GetConnectionString("DefaultMySql"), new MySqlServerVersion(new Version()));
+            // opt.UseSqlite(configuration.GetConnectionString("DefaultSqlLite"));
+            opt.UseMySql(configuration.GetConnectionString("DefaultMySql"), new MySqlServerVersion(new Version()));
         });
 
         //Updates Cros Policy to run on local host  
