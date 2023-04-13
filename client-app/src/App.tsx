@@ -1,11 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import ActivityIndex from "./components/Activity/ActivityIndex";
+import Activity from "./components/Activity/Activity";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<ActivityIndex />} />
+        <Route path="/" element={<Activity />} />
       </Routes>
     </BrowserRouter>
   );
