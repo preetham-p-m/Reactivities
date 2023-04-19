@@ -1,27 +1,36 @@
-import { Grid, List } from "semantic-ui-react";
+import React from "react";
 import { Activity } from "../../../@types/activity";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { Button, Item, Label, Segment } from "semantic-ui-react";
 
-const ActivityList = () => {
-    const [activities, setActivities] = useState<Activity[]>([]);
+interface Props {
+    activities: Activity[],
+    selectActivity: (id: string) => void,
+    deleteActivity: (id: string) => void,
+}
 
-    useEffect(() => {
-        axios.get<Activity[]>("http://localhost:5000/api/activities").then((response) => {
-            setActivities(response.data);
-        });
-    }, []);
-
+const ActivityList = ({ activities, selectActivity, deleteActivity }: Props) => {
     return (
-        <Grid>
-            <Grid.Column width='10'>
-                <List>
-                    {activities.map((activity) => (
-                        <List.Item key={activity.id}>{activity.title}</List.Item>
-                    ))}
-                </List>
-            </Grid.Column>
-        </Grid>
+        <Segment>
+            <Item.Group>
+                {activities.map(activity => (
+                    <Item key={activity.id}>
+                        <Item.Content>
+                            <Item.Header as='a'>{activity.title}</Item.Header>
+                            <Item.Meta>{activity.date}</Item.Meta>
+                            <Item.Description>
+                                <div>{activity.description}</div>
+                                <div>{activity.city}</div>
+                            </Item.Description>
+                            <Item.Extra>
+                                <Button onClick={() => selectActivity(activity.id)} floated="right" content="View" color="blue" />
+                                <Button onClick={() => deleteActivity(activity.id)} floated="right" content="Delete" color="red" />
+                                <Label basic content={activity.category} />
+                            </Item.Extra>
+                        </Item.Content>
+                    </Item>
+                ))}
+            </Item.Group>
+        </Segment>
     );
 }
 

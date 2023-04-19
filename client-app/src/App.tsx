@@ -1,11 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Activity from "./components/Activity/Activity";
+import ActivityMain from "./components/Activity/ActivityMain";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Activity />} />
+        <Route path="/" element={<ActivityMain />} />
       </Routes>
     </BrowserRouter>
   );
