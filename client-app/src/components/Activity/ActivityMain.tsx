@@ -3,17 +3,27 @@ import { Container } from "semantic-ui-react";
 import NavBar from "../common/NavBar";
 import ActivityDashboard from "./Dashboard/ActivityDashboard";
 import { Activity } from "../../@types/activity";
-import axios from "axios";
 import { v4 as uuid } from 'uuid';
+import { ActivitiesService } from "../../services/ActivityService";
+import Spinner from "../common/Spinner";
 
 const ActivityMain = () => {
     const [activities, setActivities] = useState<Activity[]>([]);
     const [selectedActivity, setSelectedActivity] = useState<Activity | undefined>(undefined);
     const [editMode, setEditMode] = useState<boolean>(false);
+    const [isLoading, setLoading] = useState<boolean>(true);
+    const [submitting, setSubmitting] = useState<boolean>(false);
+    const [deleting, setDeleting] = useState<boolean>(false)
 
     useEffect(() => {
-        axios.get<Activity[]>("http://localhost:5000/api/activities").then((response) => {
-            setActivities(response.data);
+        ActivitiesService.getList().then((response) => {
+            let activities: Activity[] = [];
+            response.forEach((activity: Activity) => {
+                activity.date = activity.date.split('T')[0];
+                activities.push(activity);
+            });
+            setActivities(activities);
+            setLoading(false);
         });
     }, []);
 
@@ -35,35 +45,55 @@ const ActivityMain = () => {
     }
 
     function handleCreateOrEditActivity(activity: Activity) {
-        activity.id
-            ? setActivities([...activities.filter(x => x.id !== activity.id), activity])
-            : setActivities([...activities, { ...activity, id: uuid() }]);
-        setEditMode(false);
-        setSelectedActivity(activity);
+        setSubmitting(true);
+        if (activity.id) {
+            ActivitiesService.update(activity).then(() => {
+                setActivities([...activities.filter(x => x.id !== activity.id), activity]);
+                setSubmitting(false);
+                setEditMode(false);
+                setSelectedActivity(activity);
+            });
+        } else {
+            activity.id = uuid();
+            ActivitiesService.create(activity).then(() => {
+                setActivities([...activities, activity]);
+                setSubmitting(false);
+                setEditMode(false);
+                setSelectedActivity(activity);
+            });
+        }
     }
 
     function handleDeleteActivity(id: string) {
-        setActivities([...activities.filter(x => x.id !== id)]);
+        setDeleting(true);
+        ActivitiesService.delete(id).then(() => {
+            setActivities([...activities.filter(x => x.id !== id)]);
+            setDeleting(false);
+        });
     }
 
     return (
         <Fragment>
             <NavBar openForm={handleFormOpen} />
-            <Container style={{ marginTop: '7em' }}>
-                <ActivityDashboard
-                    activities={activities}
-                    selectedActivity={selectedActivity}
-                    selectActivity={handleSelectActivity}
-                    cancelSelectActivity={handleCancelSelectActivity}
-                    editMode={editMode}
-                    openForm={handleFormOpen}
-                    closeForm={handleFormClose}
-                    createOrEdit={handleCreateOrEditActivity}
-                    deleteActivity={handleDeleteActivity}
-                />
-            </Container>
-        </Fragment>
-    );
+            {isLoading
+                ? <Spinner content="Loading app" />
+                : <Container style={{ marginTop: '7em' }}>
+                    <ActivityDashboard
+                        activities={activities}
+                        selectedActivity={selectedActivity}
+                        selectActivity={handleSelectActivity}
+                        cancelSelectActivity={handleCancelSelectActivity}
+                        editMode={editMode}
+                        openForm={handleFormOpen}
+                        closeForm={handleFormClose}
+                        createOrEdit={handleCreateOrEditActivity}
+                        deleteActivity={handleDeleteActivity}
+                        submitting={submitting}
+                        deleting={deleting}
+                    />
+                </Container>
+            }
+        </Fragment>);
 }
 
 export default ActivityMain;
