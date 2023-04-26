@@ -6,8 +6,12 @@ import { Activity } from "../../@types/activity";
 import { v4 as uuid } from 'uuid';
 import { ActivitiesService } from "../../services/ActivityService";
 import Spinner from "../common/Spinner";
+import { useStore } from "../../store/Store";
+import { observer } from "mobx-react-lite";
 
 const ActivityMain = () => {
+    const { activityStore } = useStore();
+
     const [activities, setActivities] = useState<Activity[]>([]);
     const [selectedActivity, setSelectedActivity] = useState<Activity | undefined>(undefined);
     const [editMode, setEditMode] = useState<boolean>(false);
@@ -96,4 +100,4 @@ const ActivityMain = () => {
         </Fragment>);
 }
 
-export default ActivityMain;
+export default observer(ActivityMain);
