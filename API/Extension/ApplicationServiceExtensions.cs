@@ -19,11 +19,12 @@ public static class ApplicationServiceExtensions
             opt.UseMySql(configuration.GetConnectionString("DefaultMySql"), new MySqlServerVersion(new Version()));
         });
 
-        //Updates Cros Policy to run on local host  
+        //Updates Cros Policy to run on local host
         services.AddCors(opt =>
         {
             opt.AddPolicy("CorsPolicy", policy =>
             {
+                // white-listing UI application
                 policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3000");
             });
         });
