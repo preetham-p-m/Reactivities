@@ -49,6 +49,6 @@
   },
   "devDependencies": {
     "@types/uuid": "^9.0.1",
-    "react-router-dom": "^6.10.0"
+    "react-router-dom": "^6.11.1"
   }
 }

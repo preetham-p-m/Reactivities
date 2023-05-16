@@ -1,14 +1,24 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import ActivityMain from "./components/Activity/ActivityMain";
+import { Fragment } from "react";
+import { Container } from "semantic-ui-react";
+import NavBar from "./components/common/NavBar";
+import { observer } from "mobx-react-lite";
+import { Outlet, useLocation } from "react-router-dom";
+import Home from "./components/Home/Home";
 
-function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<ActivityMain />} />
-      </Routes>
-    </BrowserRouter>
-  );
+const App = () => {
+    const location = useLocation();
+    return (
+        <Fragment>
+            {location.pathname === "/"
+                ? <Home />
+                : <>
+                    <NavBar />
+                    <Container style={{ marginTop: '7em' }}>
+                        <Outlet />
+                    </Container>
+                </>
+            }
+        </Fragment>);
 }
 
-export default App;
+export default observer(App);

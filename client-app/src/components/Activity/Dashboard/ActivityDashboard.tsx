@@ -1,24 +1,33 @@
 import { Grid } from "semantic-ui-react";
 import ActivityList from "../List/ActivityList";
-import ActivityDetails from "../Details/ActivityDetails";
-import ActivityForm from "../Form/ActivityForm";
-import { useStore } from "../../../store/Store";
 import { observer } from "mobx-react-lite";
+import { useEffect } from "react";
+import { useStore } from "../../../store/Store";
+import Spinner from "../../common/Spinner";
 
 const ActivityDashboard = observer(() => {
+
     const { activityStore } = useStore();
-    const { selectedActivity, editMode } = activityStore;
+    const { loadActivities, activityRegistry } = activityStore;
+
+    useEffect(() => {
+        if (activityRegistry.size <= 1) loadActivities();
+    }, [activityRegistry.size, loadActivities]);
 
     return (
-        <Grid>
-            <Grid.Column width='10'>
-                <ActivityList />
-            </Grid.Column>
-            <Grid.Column width="6">
-                {selectedActivity && !editMode && <ActivityDetails />}
-                {editMode && <ActivityForm />}
-            </Grid.Column>
-        </Grid>
+        <>
+            {activityStore.loadingInitial
+                ? <Spinner content="Loading app" />
+                : <Grid>
+                    <Grid.Column width='10'>
+                        <ActivityList />
+                    </Grid.Column>
+                    <Grid.Column width="6">
+                        <h2>Activity Filters</h2>
+                    </Grid.Column>
+                </Grid>
+            }
+        </>
     );
 });
 
