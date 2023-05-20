@@ -43,3 +43,12 @@ Run the UI project using the below command
 Navigating to `http://localhost:3000` from browser should land up in home page
 
 ![Home Page](images/home-page.png)
+
+
+## Additional Info
+Migration using dotnet-ef
+
+Create Migrations when added entity
+### `dotnet ef migrations add InitialCreate -s API -p Persistance`
+
+### `dotnet ef database update`
