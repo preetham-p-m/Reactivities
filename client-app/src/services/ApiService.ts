@@ -25,11 +25,11 @@ export const request = {
         const respose = await axios.get<T>(url);
         return responseBody(respose);
     },
-    post: async <T>(url: string, body: {}) => {
+    post: async <T>(url: string, body: object) => {
         const respose = await axios.post<T>(url, body);
         return responseBody(respose);
     },
-    put: async <T>(url: string, body: {}) => {
+    put: async <T>(url: string, body: object) => {
         const respose = await axios.put<T>(url, body);
         return responseBody(respose);
     },
