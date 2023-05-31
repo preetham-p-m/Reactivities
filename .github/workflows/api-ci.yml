@@ -10,7 +10,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  api-ci-build:
 
     runs-on: ubuntu-latest
 
