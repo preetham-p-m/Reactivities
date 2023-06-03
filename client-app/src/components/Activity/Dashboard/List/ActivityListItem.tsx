@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button, Icon, Item, Segment, SegmentGroup } from "semantic-ui-react";
-import { Activity } from "../../../../@types/ActivityType";
+import { Activity } from "../../../../@types/Activity";
 import { RouterPath } from "../../../../@types/RouterPath";
 import { format } from "date-fns";
 import { DateFormat } from "../../../../@types/CommonUtils";

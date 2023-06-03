@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useStore } from "../../../store/Store";
 import { observer } from "mobx-react-lite";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { Activity } from "../../../@types/ActivityType";
+import { Activity } from "../../../@types/Activity";
 import Spinner from "../../common/Spinner";
 import { v4 } from "uuid";
 import { Formik, Form } from "formik";

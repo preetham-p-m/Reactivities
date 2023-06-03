@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react'
 import { Segment, Grid, Icon } from 'semantic-ui-react'
-import { Activity } from '../../../@types/ActivityType';
+import { Activity } from '../../../@types/Activity';
 import { DateFormat } from '../../../@types/CommonUtils';
 import { format } from "date-fns";
 

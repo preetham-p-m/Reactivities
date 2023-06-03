@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import { Button, Header, Item, Segment, Image } from 'semantic-ui-react'
-import { Activity } from '../../../@types/ActivityType';
+import { Activity } from '../../../@types/Activity';
 import { Link } from 'react-router-dom';
 import { RouterPath } from '../../../@types/RouterPath';
 import { format } from "date-fns";

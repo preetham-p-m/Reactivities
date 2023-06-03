@@ -1,5 +1,5 @@
 import { makeAutoObservable, runInAction } from "mobx";
-import { Activity } from "../@types/ActivityType";
+import { Activity } from "../@types/Activity";
 import { ActivitiesService } from "../services/ActivityService";
 import { DateFormat } from "../@types/CommonUtils";
 import { format } from "date-fns";
