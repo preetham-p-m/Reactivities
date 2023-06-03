@@ -1,4 +1,4 @@
-import { Activity } from "../@types/activity";
+import { Activity } from "../@types/ActivityType";
 import { request } from "./ApiService";
 
 const activityEndPoint = "/activities";

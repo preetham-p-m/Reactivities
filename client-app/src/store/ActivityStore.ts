@@ -1,6 +1,8 @@
 import { makeAutoObservable, runInAction } from "mobx";
-import { Activity } from "../@types/activity";
+import { Activity } from "../@types/ActivityType";
 import { ActivitiesService } from "../services/ActivityService";
+import { DateFormat } from "../@types/CommonUtils";
+import { format } from "date-fns";
 
 export default class ActivityStore {
     activityRegistry = new Map<string, Activity>();
@@ -15,7 +17,17 @@ export default class ActivityStore {
 
     get activitiesByDate() {
         return Array.from(this.activityRegistry.values())
-            .sort((a, b) => Date.parse(a.date) - Date.parse(b.date));
+            .sort((a, b) => a.date.getTime() - b.date.getTime());
+    }
+
+    get getGroupedActivities() {
+        return Object.entries(
+            this.activitiesByDate.reduce((activities, activity) => {
+                const date = format(activity.date, DateFormat.DATE_ONLY);
+                activities[date] = activities[date] ? [...activities[date], activity] : [activity];
+                return activities;
+            }, {} as { [key: string]: Activity[] })
+        );
     }
 
     loadActivities = async () => {
@@ -23,12 +35,11 @@ export default class ActivityStore {
         try {
             const activities = await ActivitiesService.getList();
             activities.forEach((activity: Activity) => {
-                activity.date = activity.date.split('T')[0];
+                activity.date = new Date(activity.date);
                 this.activityRegistry.set(activity.id, activity);
                 this.setLoadingInitial(false);
             });
         } catch (error) {
-            console.log(error);
             this.setLoadingInitial(false);
         }
     }
@@ -48,13 +59,12 @@ export default class ActivityStore {
             this.setLoadingInitial(false);
             return activity;
         } catch (error) {
-            console.log(error);
             this.setLoadingInitial(false);
         }
     }
 
     private setActivity = (activity: Activity) => {
-        activity.date = activity.date.split('T')[0];
+        activity.date = new Date(activity.date);
         this.activityRegistry.set(activity.id, activity);
     }
 
@@ -77,7 +87,6 @@ export default class ActivityStore {
                 this.loading = false;
             });
         } catch (error) {
-            console.log(error);
             runInAction(() => {
                 this.loading = false;
             });
@@ -95,7 +104,6 @@ export default class ActivityStore {
                 this.loading = false;
             });
         } catch (error) {
-            console.log(error);
             this.loading = false;
         }
     }
@@ -109,7 +117,6 @@ export default class ActivityStore {
                 this.loading = false;
             })
         } catch (error) {
-            console.log(error);
             runInAction(() => {
                 this.loading = false;
             })

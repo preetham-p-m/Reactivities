@@ -1,9 +1,10 @@
 import { Grid } from "semantic-ui-react";
-import ActivityList from "../List/ActivityList";
+import ActivityList from "./List/ActivityList";
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 import { useStore } from "../../../store/Store";
 import Spinner from "../../common/Spinner";
+import ActivityFilters from "./Filters/ActivityFilters";
 
 const ActivityDashboard = observer(() => {
 
@@ -23,7 +24,7 @@ const ActivityDashboard = observer(() => {
                         <ActivityList />
                     </Grid.Column>
                     <Grid.Column width="6">
-                        <h2>Activity Filters</h2>
+                        <ActivityFilters />
                     </Grid.Column>
                 </Grid>
             }

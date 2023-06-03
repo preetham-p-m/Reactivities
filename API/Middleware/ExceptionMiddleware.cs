@@ -39,7 +39,7 @@ public class ExceptionMiddleware
             var response = _environment.IsDevelopment()
                 ? new AppException(
                     httpContext.Response.StatusCode,
-                    _environment.IsDevelopment() + ex.Message,
+                    ex.Message,
                     ex.StackTrace?.ToString()
                 )
                 : new AppException(httpContext.Response.StatusCode, "Internal Server Error");
