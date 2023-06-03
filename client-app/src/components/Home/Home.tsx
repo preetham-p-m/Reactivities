@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button, Container, Header, Image, Segment } from "semantic-ui-react";
+import { RouterPath } from "../../@types/RouterPath";
 
 const Home = () => {
     return <Segment inverted textAlign="center" vertical className="masthead">
@@ -9,7 +10,7 @@ const Home = () => {
                 Reactivities
             </Header>
             <Header as="h2" inverted content="Welcome to Reactivities" />
-            <Button as={Link} to={"activities"} size="huge" inverted>
+            <Button as={Link} to={`/${RouterPath.ACTIVITIES}`} size="huge" inverted>
                 Take me to Activities
             </Button>
         </Container>

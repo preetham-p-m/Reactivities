@@ -3,16 +3,24 @@ import App from "./App";
 import ActivityDashboard from "./components/Activity/Dashboard/ActivityDashboard";
 import ActivityForm from "./components/Activity/Form/ActivityForm";
 import ActivityDetails from "./components/Activity/Details/ActivityDetails";
+import NotFound from "./components/Errors/NotFound/Notfount";
+import Errors from "./components/Errors/TestError/Errors";
+import { RouterPath } from "./@types/RouterPath";
+import ServerError from "./components/Errors/ServerError/ServerError";
 
 export const routes: RouteObject[] = [
     {
         path: "/",
         element: <App />,
         children: [
-            { path: "/activities", element: <ActivityDashboard /> },
-            { path: "/activity/:id", element: <ActivityDetails /> },
-            { path: "/create-activity", element: <ActivityForm key={"create"} /> },
-            { path: "/activity/edit/:id", element: <ActivityForm key={"edit"} /> },
+            { path: `/${RouterPath.ACTIVITIES}`, element: <ActivityDashboard /> },
+            { path: `/${RouterPath.ACTIVITIES}/${RouterPath.ID}`, element: <ActivityDetails /> },
+            { path: `/${RouterPath.CREATE_ACTIVITY}`, element: <ActivityForm key={"create"} /> },
+            { path: `/${RouterPath.EDIT}/${RouterPath.ID}`, element: <ActivityForm key={"edit"} /> },
+            { path: `/${RouterPath.TEST_ERROR}`, element: <Errors /> },
+            { path: `/${RouterPath.NOT_FOUND}`, element: <NotFound /> },
+            { path: `/${RouterPath.SERVER_ERROR}`, element: <ServerError /> },
+            { path: "*", element: <NotFound /> }
         ]
     }
 ]

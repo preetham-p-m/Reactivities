@@ -9,7 +9,7 @@ public class ActivityValidator : AbstractValidator<Activity>
     {
         RuleFor(e => e.Title).NotEmpty().Length(3, 50);
         RuleFor(e => e.Date).NotEmpty();
-        RuleFor(e => e.Description).NotEmpty().MaximumLength(500);
+        RuleFor(e => e.Description).NotEmpty().MaximumLength(2000);
         RuleFor(e => e.Category).NotEmpty().Length(3, 50);
         RuleFor(e => e.City).NotEmpty();
         RuleFor(e => e.Venue).NotEmpty();
