@@ -8,54 +8,63 @@ using Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 
-var builder = WebApplication.CreateBuilder(args);
+namespace API;
 
-// Add services to the container.
-builder.Services.AddControllers(opt =>
+public class Program
 {
-    // Authorize all controllers
-    var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
-    opt.Filters.Add(new AuthorizeFilter(policy));
-});
-builder.Services.AddApplicationServices(builder.Configuration, builder.Logging);
-builder.Services.AddIdentityServices(builder.Configuration);
+    private static async Task Main(string[] args)
+    {
+        var builder = WebApplication.CreateBuilder(args);
 
-var app = builder.Build();
+        // Add services to the container.
+        builder.Services.AddControllers(opt =>
+        {
+            // Authorize all controllers
+            var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+            opt.Filters.Add(new AuthorizeFilter(policy));
+        });
+        builder.Services.AddApplicationServices(builder.Configuration, builder.Logging);
+        builder.Services.AddIdentityServices(builder.Configuration);
+        builder.Services.AddSwaggerService();
 
-// Configure the HTTP request pipeline.
-app.UseMiddleware<ExceptionMiddleware>();
+        var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
+        // Configure the HTTP request pipeline.
+        app.UseMiddleware<ExceptionMiddleware>();
+
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
+
+        app.UseCors("CorsPolicy");
+
+        app.UseHttpsRedirection();
+
+        app.UseAuthentication();
+        app.UseAuthorization();
+
+        app.MapControllers();
+
+        using var scope = app.Services.CreateScope();
+        var services = scope.ServiceProvider;
+
+        try
+        {
+            var userManager = services.GetRequiredService<UserManager<User>>();
+            var context = services.GetRequiredService<DataContext>();
+            await context.Database.MigrateAsync();
+            await UserSeeder.SeedData(userManager);
+            await ActivitySeeder.SeedData(context);
+        }
+        catch (Exception ex)
+        {
+            var logger = services.GetRequiredService<ILogger<Program>>();
+            logger.LogError("Error occured during migration!!!\n", ex);
+            throw;
+        }
+
+        app.Run();
+    }
 }
-
-app.UseCors("CorsPolicy");
-
-app.UseHttpsRedirection();
-
-app.UseAuthentication();
-app.UseAuthorization();
-
-app.MapControllers();
-
-using var scope = app.Services.CreateScope();
-var services = scope.ServiceProvider;
-
-try
-{
-    var userManager = services.GetRequiredService<UserManager<User>>();
-    var context = services.GetRequiredService<DataContext>();
-    await context.Database.MigrateAsync();
-    await UserSeeder.SeedData(userManager);
-    await ActivitySeeder.SeedData(context);
-}
-catch (Exception ex)
-{
-    var logger = services.GetRequiredService<ILogger<Program>>();
-    logger.LogError("Error occured during migration!!!\n", ex);
-    throw;
-}
-
-app.Run();
