@@ -28,9 +28,9 @@ Make `API` project as `startup` project and run `API` project
 
 ## Run UI Application
 
-Navigate to client-app using the below command
+Navigate to ui using the below command
 
-### `cd client-app`
+### `cd ui`
 
 Restore the required package using the below command
 

@@ -1,22 +1,30 @@
-run-api:
-	ASPNETCORE_ENVIRONMENT=Development \
-	dotnet run --project API/API.csproj
+api:
+	SET ASPNETCORE_ENVIRONMENT=Development
+	dotnet run --project dotnet/API/API.csproj
+
+api-pord:
+	SET ASPNETCORE_ENVIRONMENT=Production
+	dotnet run --project dotnet/API/API.csproj 
 
 watch:
-	ASPNETCORE_ENVIRONMENT=Development \
-	dotnet watch --no-hot-reload --project API/API.csproj
+	SET ASPNETCORE_ENVIRONMENT=Development
+	dotnet watch --no-hot-reload --project dotnet/API/API.csproj
+
+watch-prod:
+	SET ASPNETCORE_ENVIRONMENT=Production
+	dotnet watch --no-hot-reload --project dotnet/API/API.csproj
 
 build:
-	dotnet build Reactivities.sln
+	dotnet build dotnet/Reactivities.sln
 
 restore:
-	dotnet restore Reactivities.sln
+	dotnet restore dotnet/Reactivities.sln
 
 clean:
-	dotnet clean
+	dotnet clean dotnet/Reactivities.sln
 
-run-ui:
-	npm --prefix client-app start
+ui:
+	npm --prefix ui start
 
 ui-install:
-	npm --prefix client-app install --legacy-peer-deps
+	npm --prefix ui install --legacy-peer-deps

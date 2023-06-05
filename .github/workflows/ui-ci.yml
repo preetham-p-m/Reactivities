@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./client-app
+        working-directory: ./ui
 
     strategy:
       matrix:
@@ -24,7 +24,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
-          cache-dependency-path: client-app/package-lock.json
+          cache-dependency-path: ui/package-lock.json
 
       # - name: npm install
       #   run: npm install
