@@ -1,6 +1,5 @@
 using System.Net;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Application.Core.Exception;
 
 namespace API.Middleware;
