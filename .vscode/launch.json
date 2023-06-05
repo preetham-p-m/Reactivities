@@ -6,9 +6,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/API/bin/Debug/net6.0/API.dll",
+            "program": "${workspaceFolder}/dotnet/API/bin/Debug/net6.0/API.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/API",
+            "cwd": "${workspaceFolder}/dotnet/API",
             "stopAtEntry": false,
             "serverReadyAction": {
                 "action": "openExternally",
@@ -26,9 +26,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/API/bin/Debug/net6.0/API.dll",
+            "program": "${workspaceFolder}/dotnet/API/bin/Debug/net6.0/API.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/API",
+            "cwd": "${workspaceFolder}/dotnet/API",
             "stopAtEntry": false,
             "serverReadyAction": {
                 "action": "openExternally",

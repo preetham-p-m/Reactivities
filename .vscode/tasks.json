@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "restore",
-                "${workspaceFolder}/API/API.csproj",
+                "${workspaceFolder}/dotnet/API/API.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/API/API.csproj",
+                "${workspaceFolder}/dotnet/API/API.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -31,7 +31,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/API/API.csproj",
+                "${workspaceFolder}/dotnet/API/API.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -45,7 +45,7 @@
                 "watch",
                 "run",
                 "--project",
-                "${workspaceFolder}/API/API.csproj"
+                "${workspaceFolder}/dotnet/API/API.csproj"
             ],
             "problemMatcher": "$msCompile"
         }
