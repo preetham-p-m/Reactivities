@@ -18,7 +18,7 @@ const ActivityDashboard = observer(() => {
     return (
         <>
             {activityStore.loadingInitial
-                ? <Spinner content="Loading app" />
+                ? <Spinner content="Loading Activities" />
                 : <Grid>
                     <Grid.Column width='10'>
                         <ActivityList />

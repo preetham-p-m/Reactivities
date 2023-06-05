@@ -12,7 +12,7 @@ export default class ActivityStore {
     loadingInitial = false;
 
     constructor() {
-        makeAutoObservable(this)
+        makeAutoObservable(this);
     }
 
     get activitiesByDate() {

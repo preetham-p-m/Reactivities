@@ -44,25 +44,30 @@ public class AccountController : ControllerBase
 
     [AllowAnonymous]
     [HttpPost("register")]
-    public async Task<ActionResult<UserDto>> Register(RegisterDto signUpDto)
+    public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
     {
-        if (await UserManager.Users.AnyAsync(e => e.UserName == signUpDto.UserName))
+        if (await UserManager.Users.AnyAsync(e => e.UserName == registerDto.UserName))
         {
-            return BadRequest("Username is not available");
+            ModelState.AddModelError("UserName", "UserName is not available");
         }
-        if (await UserManager.Users.AnyAsync(e => e.Email == signUpDto.Email))
+        if (await UserManager.Users.AnyAsync(e => e.Email == registerDto.Email))
         {
-            return BadRequest("Username is not available");
+            ModelState.AddModelError("email", "Email already exists");
+        }
+
+        if (ModelState.Count != 0)
+        {
+            return ValidationProblem(ModelState);
         }
 
         var user = new User
         {
-            DisplayName = signUpDto.DisplayName,
-            Email = signUpDto.Email,
-            UserName = signUpDto.UserName
+            DisplayName = registerDto.DisplayName,
+            Email = registerDto.Email,
+            UserName = registerDto.UserName
         };
 
-        var result = await UserManager.CreateAsync(user, signUpDto.Password);
+        var result = await UserManager.CreateAsync(user, registerDto.Password);
 
         if (result.Succeeded)
         {

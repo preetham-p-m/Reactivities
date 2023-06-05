@@ -1,24 +1,43 @@
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import { Container } from "semantic-ui-react";
 import NavBar from "./components/common/NavBar";
 import { observer } from "mobx-react-lite";
 import { Outlet, useLocation } from "react-router-dom";
 import Home from "./components/Home/Home";
 import { ToastContainer } from "react-toastify";
+import { useStore } from "./store/Store";
+import Spinner from "./components/common/Spinner";
+import ModalContainer from "./components/Modal/ModalContainer";
 
 const App = () => {
     const location = useLocation();
+    const { commonStore, userStore } = useStore();
+
+    useEffect(() => {
+        if (commonStore.token) {
+            userStore.getUser().finally(() => commonStore.setAppLoaded());
+        } else {
+            commonStore.setAppLoaded();
+        }
+    }, [commonStore, userStore]);
+
     return (
         <Fragment>
-            <ToastContainer position="bottom-right" hideProgressBar theme="colored"/>
-            {location.pathname === "/"
-                ? <Home />
-                : <>
-                    <NavBar />
-                    <Container style={{ marginTop: '7em' }}>
-                        <Outlet />
-                    </Container>
+            {commonStore.appLoaded
+                ? <>
+                    <ModalContainer />
+                    < ToastContainer position="bottom-right" hideProgressBar theme="colored" />
+                    {location.pathname === "/"
+                        ? <Home />
+                        : <>
+                            <NavBar />
+                            <Container style={{ marginTop: '7em' }}>
+                                <Outlet />
+                            </Container>
+                        </>
+                    }
                 </>
+                : <Spinner />
             }
         </Fragment>);
 }

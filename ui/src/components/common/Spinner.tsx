@@ -5,7 +5,7 @@ interface Props {
     content?: string
 }
 
-const Spinner = ({ inverted = true, content = "Loading" }: Props) => {
+const Spinner = ({ inverted = true, content = "Loading app..." }: Props) => {
     return (<Dimmer active={true} inverted={true} >
         <Loader content={content} />
     </Dimmer>);
