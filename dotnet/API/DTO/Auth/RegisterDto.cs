@@ -9,6 +9,7 @@ public class RegisterDto
     public string Email { get; set; }
 
     [Required]
+    [MinLength(5)]
     public string UserName { get; set; }
 
     [Required]

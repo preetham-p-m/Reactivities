@@ -14,6 +14,13 @@ const sleep = (delay: number) => {
     });
 };
 
+axios.interceptors.request.use(config => {
+    const token = store.commonStore.token;
+    if (token && config.headers)
+        config.headers.Authorization = `Bearer ${token}`;
+    return config;
+})
+
 axios.interceptors.response.use(async response => {
     await sleep(1000);
     return response;

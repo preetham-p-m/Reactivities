@@ -5,5 +5,7 @@ export const RouterPath = {
   ID: ":id",
   TEST_ERROR: "test-error",
   NOT_FOUND: "not-found",
-  SERVER_ERROR: "server-error"
+  SERVER_ERROR: "server-error",
+  LOGIN: "login",
+  PROFILE: "profile"
 }
