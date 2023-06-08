@@ -1,6 +1,8 @@
-namespace Domain;
+using Domain;
 
-public class Activity
+namespace Application.DTO;
+
+public class ActivityDto
 {
     public Guid Id { get; set; }
     public string Title { get; set; }
@@ -10,10 +12,6 @@ public class Activity
     public string City { get; set; }
     public string Venue { get; set; }
     public bool IsCancelled { get; set; }
-    public ICollection<ActivityUser> Attendees { get; set; }
-
-    public Activity()
-    {
-        Attendees = new List<ActivityUser>();
-    }
+    public string HostUserName { get; set; }
+    public ICollection<UserForActivityDto> Attendees { get; set; }
 }

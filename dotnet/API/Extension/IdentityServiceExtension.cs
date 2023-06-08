@@ -1,7 +1,10 @@
 using System.Text;
+using API.Constants;
 using API.Services;
 using Domain;
+using Infrastructure.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using Persistence;
 
@@ -30,13 +33,25 @@ public static class IdentityServiceExtension
                 {
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(
-                        Encoding.UTF8.GetBytes(configuration["TokenKey"])
+                        Encoding.UTF8.GetBytes(Auth.TokenKey)
                     ),
                     ValidateAudience = false,
                     ValidateIssuer = false
                 };
             });
 
+        service.AddAuthorization(opt =>
+        {
+            opt.AddPolicy(
+                Policy.IsActivityHost,
+                policy =>
+                {
+                    policy.Requirements.Add(new IsHostRequirement());
+                }
+            );
+        });
+
+        service.AddTransient<IAuthorizationHandler, IsHostRequirementHandler>();
         service.AddScoped<JwtTokenService>();
 
         return service;

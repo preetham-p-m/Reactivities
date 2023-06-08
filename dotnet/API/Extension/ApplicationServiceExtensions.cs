@@ -1,7 +1,9 @@
 using Application.Activities;
 using Application.Core.Mapping;
+using Application.Interface;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Infrastructure.Security;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
@@ -17,11 +19,10 @@ public static class ApplicationServiceExtensions
         ILoggingBuilder loggingBuilder
     )
     {
-        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
 
-        // Database context
+        // database context
         services.AddDbContext<DataContext>(opt =>
         {
             // opt.UseSqlite(configuration.GetConnectionString("DefaultSqlLite"));
@@ -31,7 +32,7 @@ public static class ApplicationServiceExtensions
             );
         });
 
-        // Cors Policy
+        // cors Policy
         services.AddCors(opt =>
         {
             opt.AddPolicy(
@@ -44,7 +45,7 @@ public static class ApplicationServiceExtensions
             );
         });
 
-        // Mediator service
+        // mediator service
         services.AddMediatR(typeof(List.Handler));
 
         // automapper service
@@ -54,13 +55,17 @@ public static class ApplicationServiceExtensions
         services.AddFluentValidationAutoValidation();
         services.AddValidatorsFromAssemblyContaining<Create>();
 
-        // Added Serilog Configuration
+        // serilog Configuration
         var logger = new LoggerConfiguration().ReadFrom
             .Configuration(configuration)
             .Enrich.FromLogContext()
             .CreateLogger();
         loggingBuilder.ClearProviders();
         loggingBuilder.AddSerilog(logger);
+
+        // injecting IUserAccessor and enable use of AddHttpContextAccessor in infrastructure project
+        services.AddHttpContextAccessor();
+        services.AddScoped<IUserAccessor, UserAccessor>();
 
         return services;
     }
