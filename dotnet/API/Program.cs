@@ -55,8 +55,7 @@ public class Program
             var userManager = services.GetRequiredService<UserManager<User>>();
             var context = services.GetRequiredService<DataContext>();
             await context.Database.MigrateAsync();
-            await UserSeeder.SeedData(userManager);
-            await ActivitySeeder.SeedData(context);
+            await Seeder.SeedData(context, userManager);
         }
         catch (Exception ex)
         {

@@ -1,4 +1,8 @@
-# Reactivities
+# Reactivities (checkout to tag 0.0.2 to get the below result)
+
+command to checkout to tag
+
+### `git checkout 0.0.2`
 
 ## Running API Application
 
@@ -28,9 +32,9 @@ Make `API` project as `startup` project and run `API` project
 
 ## Run UI Application
 
-Navigate to ui using the below command
+Navigate to client-app using the below command
 
-### `cd ui`
+### `cd client-app`
 
 Restore the required package using the below command
 
@@ -44,11 +48,12 @@ Navigating to `http://localhost:3000` from browser should land up in home page
 
 ![Home Page](images/home-page.png)
 
-
 ## Additional Info
+
 Migration using dotnet-ef
 
 Create Migrations when added entity
+
 ### `dotnet ef migrations add InitialCreate -s API -p Persistance`
 
 ### `dotnet ef database update`
