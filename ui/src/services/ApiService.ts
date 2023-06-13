@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
 import { router } from '../Routes';
 import { store } from '../store/Store';
-import { RouterPath } from '../@types/RouterPath';
+import { RouterPath } from '../utils/RouterPathConstant';
 
 axios.defaults.baseURL = "http://localhost:5000/api";
 

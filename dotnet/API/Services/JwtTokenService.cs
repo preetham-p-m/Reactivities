@@ -9,13 +9,6 @@ namespace API.Services;
 
 public class JwtTokenService
 {
-    private readonly IConfiguration _configuration;
-
-    public JwtTokenService(IConfiguration configuration)
-    {
-        _configuration = configuration;
-    }
-
     public string CreateToken(User user)
     {
         var claims = new List<Claim>
@@ -32,7 +25,7 @@ public class JwtTokenService
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(claims),
-            Expires = DateTime.UtcNow.AddDays(7),
+            Expires = DateTime.UtcNow.AddDays(30),
             SigningCredentials = creds
         };
 

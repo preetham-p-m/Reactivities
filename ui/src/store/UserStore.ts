@@ -3,7 +3,7 @@ import { LoginUser, RegisterUser, User } from "../@types/User";
 import { AccountService } from "../services/AccountService";
 import { store } from "./Store";
 import { router } from "../Routes";
-import { RouterPath } from "../@types/RouterPath";
+import { RouterPath } from "../utils/RouterPathConstant";
 
 export default class UserStore {
     user: User | null = null;

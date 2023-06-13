@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button, Container, Header, Image, Segment } from "semantic-ui-react";
-import { RouterPath } from "../../@types/RouterPath";
+import { RouterPath } from "../../utils/RouterPathConstant";
 import { useStore } from "../../store/Store";
 import { observer } from "mobx-react-lite";
 import Login from "../Users/Login/Login";

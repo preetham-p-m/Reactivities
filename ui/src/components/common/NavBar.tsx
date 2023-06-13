@@ -1,6 +1,6 @@
 import { Button, Container, Dropdown, DropdownItem, DropdownMenu, Image, Menu } from "semantic-ui-react";
 import { Link, NavLink } from "react-router-dom";
-import { RouterPath } from "../../@types/RouterPath";
+import { RouterPath } from "../../utils/RouterPathConstant";
 import { useStore } from "../../store/Store";
 import { observer } from "mobx-react-lite";
 

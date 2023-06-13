@@ -16,7 +16,3 @@ export interface RegisterUser {
     displayName: string,
     userName: string
 }
-
-export const Token = {
-    JWT: "jwt_token"
-}
