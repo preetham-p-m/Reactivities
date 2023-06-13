@@ -1,10 +1,11 @@
 import { observer } from 'mobx-react-lite';
-import { Button, Header, Item, Segment, Image } from 'semantic-ui-react'
+import { Button, Header, Item, Segment, Image, Label } from 'semantic-ui-react'
 import { Activity } from '../../../@types/Activity';
 import { Link } from 'react-router-dom';
-import { RouterPath } from '../../../@types/RouterPath';
+import { RouterPath } from '../../../utils/RouterPathConstant';
 import { format } from "date-fns";
 import { DateFormat } from '../../../@types/CommonUtils';
+import { useStore } from '../../../store/Store';
 
 const activityImageStyle = {
   filter: 'brightness(30%)'
@@ -24,9 +25,17 @@ interface Props {
 }
 
 const ActivityDetailedHeader = observer(({ activity }: Props) => {
+  const { activityStore: { updateAttendence, loading, cancelActivityToggle } } = useStore();
   return (
     <Segment.Group>
       <Segment basic attached='top' style={{ padding: '0' }}>
+        {activity.isCancelled &&
+          <Label
+            style={{ position: "absolute", zIndex: 1000, left: -14, top: 20 }}
+            ribbon
+            color="red"
+            content="Cancelled" />
+        }
         <Image src={`/assets/categoryImages/${activity.category}.jpg`} fluid style={activityImageStyle} />
         <Segment style={activityImageTextStyle} basic>
           <Item.Group>
@@ -39,7 +48,7 @@ const ActivityDetailedHeader = observer(({ activity }: Props) => {
                 />
                 <p>{format(activity.date, DateFormat.DATE_ONLY)}</p>
                 <p>
-                  Hosted by <strong>Bob</strong>
+                  Hosted by <strong><Link to={`/${RouterPath.PROFILE}/${activity.host?.userName}`}>{activity.host?.displayName}</Link></strong>
                 </p>
               </Item.Content>
             </Item>
@@ -47,11 +56,38 @@ const ActivityDetailedHeader = observer(({ activity }: Props) => {
         </Segment>
       </Segment>
       <Segment clearing attached='bottom'>
-        <Button color='teal'>Join Activity</Button>
-        <Button>Cancel attendance</Button>
-        <Button as={Link} to={`/${RouterPath.EDIT}/${activity.id}`} color='orange' floated='right'>
-          Manage Event
-        </Button>
+        {!activity.isHost && (activity.isGoing
+          ? <Button
+            loading={loading}
+            onClick={updateAttendence}>
+            Cancel attendance
+          </Button>
+          : <Button
+            disabled={activity.isCancelled}
+            loading={loading}
+            onClick={updateAttendence}
+            color='teal'>
+            Join Activity
+          </Button>)
+        }
+        {activity.isHost &&
+          <>
+            <Button color={activity.isCancelled ? "green" : "red"}
+              floated='left'
+              basic
+              content={activity.isCancelled ? "Re-active Activity" : "Cancel Activity"}
+              onClick={cancelActivityToggle}
+              loading={loading} />
+            <Button
+              disabled={activity.isCancelled}
+              as={Link}
+              to={`/${RouterPath.EDIT}/${activity.id}`}
+              color='orange'
+              floated='right'>
+              Manage Event
+            </Button>
+          </>
+        }
       </Segment>
     </Segment.Group>
   )

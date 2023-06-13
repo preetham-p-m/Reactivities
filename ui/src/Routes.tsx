@@ -5,7 +5,7 @@ import ActivityForm from "./components/Activity/Form/ActivityForm";
 import ActivityDetails from "./components/Activity/Details/ActivityDetails";
 import NotFound from "./components/Errors/NotFound/Notfount";
 import Errors from "./components/Errors/TestError/Errors";
-import { RouterPath } from "./@types/RouterPath";
+import { RouterPath } from "./utils/RouterPathConstant";
 import ServerError from "./components/Errors/ServerError/ServerError";
 import Login from "./components/Users/Login/Login";
 

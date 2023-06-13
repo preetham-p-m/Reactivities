@@ -1,6 +1,6 @@
 import { makeAutoObservable, reaction } from "mobx";
 import { ServerError } from "../@types/ServerError";
-import { Token } from "../@types/User";
+import { Token } from "../utils/AuthConstant";
 
 export default class CommonStore {
   error: ServerError | null = null;
