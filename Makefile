@@ -14,6 +14,9 @@ api-watch-prod:
 	set ASPNETCORE_ENVIRONMENT=Production
 	dotnet watch --no-hot-reload --project dotnet/API/API.csproj
 
+api-create-migration:
+	dotnet ef migrations add <Migration-Message> -s dotnet/API -p dotnet/Persistence
+
 api-build:
 	dotnet build dotnet/Reactivities.sln
 
@@ -28,3 +31,5 @@ ui-start:
 
 ui-install:
 	npm --prefix ui install --legacy-peer-deps
+
+# TODO: Add launch config

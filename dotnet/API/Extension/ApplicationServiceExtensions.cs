@@ -3,6 +3,7 @@ using Application.Core.Mapping;
 using Application.Interface;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Infrastructure.Media;
 using Infrastructure.Security;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -66,6 +67,9 @@ public static class ApplicationServiceExtensions
         // injecting IUserAccessor and enable use of AddHttpContextAccessor in infrastructure project
         services.AddHttpContextAccessor();
         services.AddScoped<IUserAccessor, UserAccessor>();
+        services.AddScoped<IMediaAccessor, MediaAccessor>();
+
+        services.Configure<CloudinarySettings>(configuration.GetSection("Cloudinary"));
 
         return services;
     }
