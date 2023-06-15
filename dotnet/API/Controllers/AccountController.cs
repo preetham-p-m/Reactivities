@@ -27,7 +27,9 @@ public class AccountController : ControllerBase
     [HttpPost("login")]
     public async Task<ActionResult<UserAuthDto>> Login(LoginDto loginDto)
     {
-        var user = await UserManager.FindByEmailAsync(loginDto.Email);
+        var user = await UserManager.Users
+            .Include(u => u.Photos)
+            .FirstOrDefaultAsync(u => u.Email == loginDto.Email);
 
         if (user == null)
             return Unauthorized();
@@ -80,7 +82,9 @@ public class AccountController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<UserAuthDto>> GetCurrentUser()
     {
-        var user = await UserManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
+        var user = await UserManager.Users
+            .Include(u => u.Photos)
+            .FirstOrDefaultAsync(u => u.Email == User.FindFirstValue(ClaimTypes.Email));
         return CreateUserDtoObject(user);
     }
 
@@ -89,7 +93,7 @@ public class AccountController : ControllerBase
         return new UserAuthDto
         {
             DisplayName = user.UserName,
-            Image = null,
+            Image = user?.Photos?.FirstOrDefault(p => p.IsMain)?.Url,
             Token = JwtTokenService.CreateToken(user),
             UserName = user.UserName
         };

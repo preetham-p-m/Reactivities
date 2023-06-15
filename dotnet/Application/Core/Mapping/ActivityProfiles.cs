@@ -20,6 +20,9 @@ public class ActivityProfiles : Profile
             .ForMember(ud => ud.UserName, m => m.MapFrom(aa => aa.User.UserName))
             .ForMember(ud => ud.Bio, m => m.MapFrom(aa => aa.User.Bio))
             .ForMember(ud => ud.DisplayName, m => m.MapFrom(aa => aa.User.DisplayName))
-            .ForMember(ud => ud.Image, m => m.MapFrom(aa => aa.User.Bio));
+            .ForMember(
+                ud => ud.Image,
+                m => m.MapFrom(aa => aa.User.Photos.FirstOrDefault(p => p.IsMain).Url)
+            );
     }
 }
