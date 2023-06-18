@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
 import { router } from '../Routes';
 import { store } from '../store/Store';
-import { RouterPath } from '../utils/RouterPathConstant';
+import { routerPath } from '../utils/router/routerPath';
 
 axios.defaults.baseURL = "http://localhost:5000/api";
 
@@ -30,7 +30,7 @@ axios.interceptors.response.use(async response => {
         case 400:
             console.log(data)
             if (config.method === "get" && data.errors.hasOwnProperty("id")) {
-                router.navigate(`/${RouterPath.NOT_FOUND}`);
+                router.navigate(`/${routerPath.NOT_FOUND}`);
             }
             if (data.errors) {
                 const modelStateError = [];
@@ -50,17 +50,17 @@ axios.interceptors.response.use(async response => {
             toast.error("forbidden");
             break;
         case 404:
-            router.navigate(`/${RouterPath.NOT_FOUND}`);
+            router.navigate(`/${routerPath.NOT_FOUND}`);
             break;
         case 500:
             store.commonStore.setServerError(data);
-            router.navigate(`/${RouterPath.SERVER_ERROR}`);
+            router.navigate(`/${routerPath.SERVER_ERROR}`);
             break;
     }
     return Promise.reject(error);
 });
 
-export const request = {
+export const ApiService = {
     get: async <T>(url: string) => {
         const respose = await axios.get<T>(url);
         return responseBody(respose);

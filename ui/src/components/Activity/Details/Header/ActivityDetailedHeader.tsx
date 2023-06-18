@@ -1,11 +1,12 @@
 import { observer } from 'mobx-react-lite';
 import { Button, Header, Item, Segment, Image, Label } from 'semantic-ui-react'
-import { Activity } from '../../../@types/Activity';
+import { Activity } from '../../../../@types/Activity';
 import { Link } from 'react-router-dom';
-import { RouterPath } from '../../../utils/RouterPathConstant';
+import { routerPath } from '../../../../utils/router/routerPath';
 import { format } from "date-fns";
-import { DateFormat } from '../../../@types/CommonUtils';
-import { useStore } from '../../../store/Store';
+import { DateFormat } from '../../../../@types/CommonUtils';
+import { useStore } from '../../../../store/Store';
+import { assets } from '../../../../utils/constants/assets';
 
 const activityImageStyle = {
   filter: 'brightness(30%)'
@@ -36,7 +37,7 @@ const ActivityDetailedHeader = observer(({ activity }: Props) => {
             color="red"
             content="Cancelled" />
         }
-        <Image src={`/assets/categoryImages/${activity.category}.jpg`} fluid style={activityImageStyle} />
+        <Image src={`${assets.CATEGORY_PATH}/${activity.category}.jpg`} fluid style={activityImageStyle} />
         <Segment style={activityImageTextStyle} basic>
           <Item.Group>
             <Item>
@@ -48,7 +49,7 @@ const ActivityDetailedHeader = observer(({ activity }: Props) => {
                 />
                 <p>{format(activity.date, DateFormat.DATE_ONLY)}</p>
                 <p>
-                  Hosted by <strong><Link to={`/${RouterPath.PROFILE}/${activity.host?.userName}`}>{activity.host?.displayName}</Link></strong>
+                  Hosted by <strong><Link to={`/${routerPath.PROFILE}/${activity.host?.userName}`}>{activity.host?.displayName}</Link></strong>
                 </p>
               </Item.Content>
             </Item>
@@ -81,7 +82,7 @@ const ActivityDetailedHeader = observer(({ activity }: Props) => {
             <Button
               disabled={activity.isCancelled}
               as={Link}
-              to={`/${RouterPath.EDIT}/${activity.id}`}
+              to={`/${routerPath.EDIT}/${activity.id}`}
               color='orange'
               floated='right'>
               Manage Event

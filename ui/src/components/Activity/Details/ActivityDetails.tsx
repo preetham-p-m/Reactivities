@@ -1,13 +1,13 @@
 import { Grid } from "semantic-ui-react";
 import { useStore } from "../../../store/Store";
-import Spinner from "../../common/Spinner";
+import Spinner from "../../Common/Spinner";
 import { observer } from "mobx-react-lite";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
-import ActivityDetailedHeader from "./ActivityDetailedHeader";
-import ActivityDetailedChat from "./ActivityDetailedChat";
-import ActivityDetailedInfo from "./ActivityDetailedInfo";
-import ActivityDetailedSidebar from "./ActivityDetailedSidebar";
+import ActivityDetailedHeader from "./Header/ActivityDetailedHeader";
+import ActivityDetailedChat from "./Chat/ActivityDetailedChat";
+import ActivityDetailedInfo from "./Info/ActivityDetailedInfo";
+import ActivityDetailedSidebar from "./Sidebar/ActivityDetailedSidebar";
 
 const ActivityDetails = observer(() => {
     const { activityStore } = useStore();

@@ -1,4 +1,4 @@
-export const RouterPath = {
+export const routerPath = {
   ACTIVITIES: "activities",
   CREATE_ACTIVITY: "activities/create",
   EDIT: "activities/edit",
@@ -7,5 +7,6 @@ export const RouterPath = {
   NOT_FOUND: "not-found",
   SERVER_ERROR: "server-error",
   LOGIN: "login",
-  PROFILE: "profile"
+  PROFILE: "profile",
+  USER_NAME: ":username"
 }

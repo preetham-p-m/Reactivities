@@ -1,12 +1,12 @@
 import { ErrorMessage, Form, Formik } from "formik";
-import TextField from "../../common/FormHelper/TextField";
-import PasswordField from "../../common/FormHelper/PasswordField";
+import TextField from "../../Common/FormHelper/TextField";
+import PasswordField from "../../Common/FormHelper/PasswordField";
 import { Button, Header, Label } from "semantic-ui-react";
 import { useStore } from "../../../store/Store";
 import { observer } from "mobx-react-lite";
 
 const Login = observer(() => {
-    const { userStore } = useStore();
+    const { authStore: userStore } = useStore();
 
     return (
         <Formik

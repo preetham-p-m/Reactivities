@@ -2,13 +2,13 @@ import { observer } from "mobx-react-lite";
 import { useStore } from "../../../store/Store";
 import { ErrorMessage, Form, Formik } from "formik";
 import { Button, Header } from "semantic-ui-react";
-import TextField from "../../common/FormHelper/TextField";
-import PasswordField from "../../common/FormHelper/PasswordField";
+import TextField from "../../Common/FormHelper/TextField";
+import PasswordField from "../../Common/FormHelper/PasswordField";
 import * as Yup from "yup";
 import ValidationError from "../../Errors/Validation/ValidationError";
 
 const Register = observer(() => {
-    const { userStore } = useStore();
+    const { authStore: userStore } = useStore();
 
     const validationSchema = Yup.object({
         displayName: Yup.string().required(),

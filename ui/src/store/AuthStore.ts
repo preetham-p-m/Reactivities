@@ -1,11 +1,11 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import { LoginUser, RegisterUser, User } from "../@types/User";
-import { AccountService } from "../services/AccountService";
+import { AccountService } from "../Services/AccountService";
 import { store } from "./Store";
 import { router } from "../Routes";
-import { RouterPath } from "../utils/RouterPathConstant";
+import { routerPath } from "../utils/router/routerPath";
 
-export default class UserStore {
+export default class AuthStore {
     user: User | null = null;
 
     constructor() {
@@ -21,7 +21,7 @@ export default class UserStore {
             const user = await AccountService.register(creds);
             store.commonStore.setToken(user.token);
             runInAction(() => this.user = user);
-            router.navigate(`/${RouterPath.ACTIVITIES}`);
+            router.navigate(`/${routerPath.ACTIVITIES}`);
             store.modalStore.closeModal();
         } catch (error) {
             throw (error);
@@ -33,7 +33,7 @@ export default class UserStore {
             const user = await AccountService.login(creds);
             store.commonStore.setToken(user.token);
             runInAction(() => this.user = user);
-            router.navigate(`/${RouterPath.ACTIVITIES}`)
+            router.navigate(`/${routerPath.ACTIVITIES}`)
             store.modalStore.closeModal();
         } catch (error) {
             throw (error);
@@ -52,6 +52,12 @@ export default class UserStore {
             runInAction(() => this.user = user);
         } catch (error) {
             console.log(error);
+        }
+    }
+
+    setImage = (image: string) => {
+        if (this.user) {
+            this.user.image = image;
         }
     }
 }
