@@ -1,10 +1,10 @@
 import { makeAutoObservable, reaction } from "mobx";
 import { ServerError } from "../@types/ServerError";
-import { Token } from "../utils/AuthConstant";
+import { auth } from "../utils/constants/auth";
 
 export default class CommonStore {
   error: ServerError | null = null;
-  token: string | null = localStorage.getItem(Token.JWT);
+  token: string | null = localStorage.getItem(auth.JWT_TOKEN);
   appLoaded = false;
 
   constructor() {
@@ -12,9 +12,9 @@ export default class CommonStore {
 
     reaction(() => this.token, token => {
       if (token) {
-        localStorage.setItem(Token.JWT, token);
+        localStorage.setItem(auth.JWT_TOKEN, token);
       } else {
-        localStorage.removeItem(Token.JWT);
+        localStorage.removeItem(auth.JWT_TOKEN);
       }
     })
   }

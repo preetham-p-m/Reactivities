@@ -2,8 +2,8 @@ import React from 'react'
 import { Segment, List, Label, Item, Image } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { observer } from 'mobx-react-lite'
-import { RouterPath } from '../../../utils/RouterPathConstant'
-import { Activity } from '../../../@types/Activity'
+import { routerPath } from '../../../../utils/router/routerPath'
+import { Activity } from '../../../../@types/Activity'
 
 interface ActivityDetailedSidebarProps {
   activity: Activity
@@ -40,7 +40,7 @@ const ActivityDetailedSidebar = observer(({ activity: { attendees, host } }: Act
                   <Image size='tiny' src={attendee.image || '/assets/user.png'} />
                   <Item.Content verticalAlign='middle'>
                     <Item.Header as='h3'>
-                      <Link to={`${RouterPath.PROFILE}/${attendee.userName}`}>{attendee.displayName}</Link>
+                      <Link to={`${routerPath.PROFILE}/${attendee.userName}`}>{attendee.displayName}</Link>
                     </Item.Header>
                     <Item.Extra style={{ color: 'orange' }}>Following</Item.Extra>
                   </Item.Content>

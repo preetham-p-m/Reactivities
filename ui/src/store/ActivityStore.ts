@@ -1,10 +1,10 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import { Activity, ActivityFormValues } from "../@types/Activity";
-import { ActivitiesService } from "../services/ActivityService";
+import { ActivitiesService } from "../Services/ActivityService";
 import { DateFormat } from "../@types/CommonUtils";
 import { format } from "date-fns";
-import { store } from "./Store";
 import { Profile } from "../@types/Profile";
+import { store } from "./Store";
 
 export default class ActivityStore {
     activityRegistry = new Map<string, Activity>();
@@ -66,7 +66,7 @@ export default class ActivityStore {
     }
 
     private setActivity = (activity: Activity) => {
-        const user = store.userStore.user;
+        const user = store.authStore.user;
         if (user) {
             activity.isGoing = activity.attendees!.some(a => a.userName === user.userName);
             activity.isHost = activity.hostUserName === user.userName;
@@ -85,7 +85,7 @@ export default class ActivityStore {
     }
 
     createActivity = async (activity: ActivityFormValues) => {
-        const user = store.userStore.user;
+        const user = store.authStore.user;
         const attendee = new Profile(user!);
         try {
             await ActivitiesService.create(activity);
@@ -131,7 +131,7 @@ export default class ActivityStore {
     }
 
     updateAttendence = async () => {
-        const user = store.userStore.user;
+        const user = store.authStore.user;
         this.loading = true;
         try {
             await ActivitiesService.attend(this.selectedActivity!.id);

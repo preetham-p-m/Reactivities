@@ -4,17 +4,17 @@ import { useStore } from "../../../store/Store";
 import { observer } from "mobx-react-lite";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { ActivityFormValues } from "../../../@types/Activity";
-import Spinner from "../../common/Spinner";
+import Spinner from "../../Common/Spinner";
 import { v4 } from "uuid";
 import { Formik, Form } from "formik";
-import TextField from "../../common/FormHelper/TextField";
+import TextField from "../../Common/FormHelper/TextField";
 import * as Yup from "yup";
-import TextAreaField from "../../common/FormHelper/TextAreaField";
-import DropDownField from "../../common/FormHelper/DropDownField";
+import TextAreaField from "../../Common/FormHelper/TextAreaField";
+import DropDownField from "../../Common/FormHelper/DropDownField";
 import { ActivityCategoryOptions } from "./ReferenceData/ActivityCategoryOptions";
-import DateField from "../../common/FormHelper/DateField";
+import DateField from "../../Common/FormHelper/DateField";
 import { DateFormat } from "../../../@types/CommonUtils";
-import { RouterPath } from "../../../utils/RouterPathConstant";
+import { routerPath } from "../../../utils/router/routerPath";
 
 const ActivityForm = observer(() => {
     const { activityStore } = useStore();
@@ -52,10 +52,10 @@ const ActivityForm = observer(() => {
 
     const handleFormSubmit = (activity: ActivityFormValues) => {
         if (activity.id) {
-            updateActivity(activity).then(() => navigate(`/${RouterPath.ACTIVITIES}/${activity.id}`));
+            updateActivity(activity).then(() => navigate(`/${routerPath.ACTIVITIES}/${activity.id}`));
         } else {
             activity.id = v4();
-            createActivity(activity).then(() => navigate(`/${RouterPath.ACTIVITIES}/${activity.id}`));
+            createActivity(activity).then(() => navigate(`/${routerPath.ACTIVITIES}/${activity.id}`));
         }
     }
 

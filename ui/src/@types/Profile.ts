@@ -4,7 +4,8 @@ export interface Profile {
     userName: string,
     displayName: string,
     bio?: string,
-    image?: string
+    image?: string,
+    photos?: Photo[]
 }
 
 export class Profile implements Profile {
@@ -13,4 +14,10 @@ export class Profile implements Profile {
         this.displayName = user.displayName;
         this.image = user.image
     }
+}
+
+export interface Photo {
+    id: string,
+    url: string,
+    isMain: boolean
 }

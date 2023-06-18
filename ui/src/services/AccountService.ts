@@ -1,8 +1,8 @@
 import { LoginUser, RegisterUser, User } from "../@types/User";
-import { request } from "./ApiService";
+import { ApiService } from "./ApiService";
 
 export const AccountService = {
-    current: () => request.get<User>("/account"),
-    login: (user: LoginUser) => request.post<User>("/account/login", user),
-    register: (user: RegisterUser) => request.post<User>("/account/register", user)
+    current: () => ApiService.get<User>("/account"),
+    login: (user: LoginUser) => ApiService.post<User>("/account/login", user),
+    register: (user: RegisterUser) => ApiService.post<User>("/account/register", user)
 }

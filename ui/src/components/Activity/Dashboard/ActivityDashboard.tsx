@@ -3,7 +3,7 @@ import ActivityList from "./List/ActivityList";
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 import { useStore } from "../../../store/Store";
-import Spinner from "../../common/Spinner";
+import Spinner from "../../Common/Spinner";
 import ActivityFilters from "./Filters/ActivityFilters";
 
 const ActivityDashboard = observer(() => {
