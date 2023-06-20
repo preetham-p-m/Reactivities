@@ -2,10 +2,10 @@ import { useField } from "formik";
 import { Form, Label } from "semantic-ui-react";
 
 interface TextAreaFieldProps {
-  placeholder: string,
-  name: string,
-  rows: number,
-  label?: string
+  placeholder: string;
+  name: string;
+  rows: number;
+  label?: string;
 }
 
 const TextAreaField = (props: TextAreaFieldProps) => {
@@ -18,6 +18,6 @@ const TextAreaField = (props: TextAreaFieldProps) => {
       {meta.touched && meta.error ? <Label basic color="red">{meta.error}</Label> : null}
     </Form.Field>
   );
-}
+};
 
 export default TextAreaField;

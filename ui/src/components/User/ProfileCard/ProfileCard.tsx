@@ -9,7 +9,7 @@ interface ProfileCardProps {
     profile: Profile;
 }
 
-const ProfileCard = observer(({ profile }: ProfileCardProps) => {
+const ProfileCard = ({ profile }: ProfileCardProps) => {
     return (
         <Card as={Link} to={`/${routerPath.PROFILE}/${profile.userName}`}>
             <Image src={profile.image || assets.USER} />
@@ -23,6 +23,6 @@ const ProfileCard = observer(({ profile }: ProfileCardProps) => {
             </Card.Content>
         </Card>
     );
-})
+};
 
-export default ProfileCard;
+export default observer(ProfileCard);

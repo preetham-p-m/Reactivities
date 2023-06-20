@@ -1,7 +1,7 @@
 import { Message } from "semantic-ui-react";
 
 interface props {
-  errors: any 
+  errors: any;
 }
 
 const ValidationError = ({ errors }: props) => {
@@ -16,6 +16,6 @@ const ValidationError = ({ errors }: props) => {
       )}
     </Message>
   );
-}
+};
 
 export default ValidationError;

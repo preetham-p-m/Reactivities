@@ -7,7 +7,7 @@ import PasswordField from "../../Common/FormHelper/PasswordField";
 import * as Yup from "yup";
 import ValidationError from "../../Errors/Validation/ValidationError";
 
-const Register = observer(() => {
+const Register = () => {
     const { authStore: userStore } = useStore();
 
     const validationSchema = Yup.object({
@@ -41,6 +41,6 @@ const Register = observer(() => {
 
         </Formik>
     );
-});
+};
 
-export default Register;
+export default observer(Register);

@@ -1,5 +1,5 @@
-import { useCallback } from 'react'
-import { useDropzone } from 'react-dropzone'
+import { useCallback } from 'react';
+import { useDropzone } from 'react-dropzone';
 import { Header, Icon } from 'semantic-ui-react';
 
 interface MediaWidgetDropzoneProps {
@@ -14,11 +14,11 @@ const MediaWidgetDropzone = ({ setFiles }: MediaWidgetDropzoneProps) => {
         padding: "30px",
         textAlign: "center" as "center",
         heignt: 200
-    }
+    };
 
     const dzActive = {
         borderColor: "green"
-    }
+    };
 
     const onDrop = useCallback((acceptedFiles: any) => {
         setFiles(acceptedFiles.map((file: any) =>
@@ -28,9 +28,9 @@ const MediaWidgetDropzone = ({ setFiles }: MediaWidgetDropzoneProps) => {
                     preview: URL.createObjectURL(file)
                 }
             )));
-    }, [setFiles])
+    }, [setFiles]);
 
-    const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
     return (
         <div {...getRootProps()}
@@ -40,9 +40,9 @@ const MediaWidgetDropzone = ({ setFiles }: MediaWidgetDropzoneProps) => {
         >
             <input {...getInputProps()} />
             <Icon name="upload" size="huge" />
-            <Header content="Drop image here"/>
+            <Header content="Drop image here" />
         </div>
-    )
-}
+    );
+};
 
 export default MediaWidgetDropzone;

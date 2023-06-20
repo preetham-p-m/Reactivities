@@ -40,6 +40,6 @@ const App = () => {
                 : <Spinner />
             }
         </Fragment>);
-}
+};
 
 export default observer(App);

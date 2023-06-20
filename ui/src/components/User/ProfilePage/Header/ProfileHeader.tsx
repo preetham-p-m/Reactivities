@@ -4,7 +4,7 @@ import { Profile } from "../../../../@types/Profile";
 import { observer } from "mobx-react-lite";
 
 interface ProfileHeaderProps {
-    profile: Profile
+    profile: Profile;
 }
 
 const ProfileHeader = ({ profile }: ProfileHeaderProps) => {
@@ -39,6 +39,6 @@ const ProfileHeader = ({ profile }: ProfileHeaderProps) => {
             </Grid>
         </Segment>
     );
-}
+};
 
 export default observer(ProfileHeader);

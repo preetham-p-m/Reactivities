@@ -16,7 +16,7 @@ import DateField from "../../Common/FormHelper/DateField";
 import { DateFormat } from "../../../@types/CommonUtils";
 import { routerPath } from "../../../utils/router/routerPath";
 
-const ActivityForm = observer(() => {
+const ActivityForm = () => {
     const { activityStore } = useStore();
     const { createActivity,
         updateActivity,
@@ -44,7 +44,7 @@ const ActivityForm = observer(() => {
             .required("City is required"),
         venue: Yup.string()
             .required("Venue is required")
-    })
+    });
 
     useEffect(() => {
         if (id) loadActivity(id).then(activity => setActivity(new ActivityFormValues(activity!)));
@@ -57,7 +57,7 @@ const ActivityForm = observer(() => {
             activity.id = v4();
             createActivity(activity).then(() => navigate(`/${routerPath.ACTIVITIES}/${activity.id}`));
         }
-    }
+    };
 
     return (
         <>
@@ -94,6 +94,6 @@ const ActivityForm = observer(() => {
             }
         </>
     );
-})
+};
 
-export default ActivityForm;
+export default observer(ActivityForm);

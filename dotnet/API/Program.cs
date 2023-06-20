@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Identity;
 using Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using API.SignalR;
+using API.Constants;
 
 namespace API;
 
@@ -42,10 +44,17 @@ public class Program
 
         app.UseHttpsRedirection();
 
+        app.UseRouting();
+
         app.UseAuthentication();
         app.UseAuthorization();
 
         app.MapControllers();
+        app.UseEndpoints(endpoint =>
+        {
+            endpoint.MapHub<ChatHub>(Message.PathChat);
+        });
+        // app.MapHub<ChatHub>(Message.PathChat);
 
         using var scope = app.Services.CreateScope();
         var services = scope.ServiceProvider;

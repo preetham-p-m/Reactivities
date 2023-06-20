@@ -3,7 +3,7 @@ import { Form, Label } from "semantic-ui-react";
 import DatePicker, { ReactDatePickerProps } from "react-datepicker";
 
 interface DateFieldProps extends Partial<ReactDatePickerProps> {
-  name: string
+  name: string;
 }
 
 const DateField = (props: DateFieldProps) => {
@@ -19,6 +19,6 @@ const DateField = (props: DateFieldProps) => {
       {meta.touched && !!meta.error ? <Label basic color="red">{meta.error}</Label> : null}
     </Form.Field>
   );
-}
+};
 
 export default DateField;

@@ -33,18 +33,18 @@ export default class AuthStore {
             const user = await AccountService.login(creds);
             store.commonStore.setToken(user.token);
             runInAction(() => this.user = user);
-            router.navigate(`/${routerPath.ACTIVITIES}`)
+            router.navigate(`/${routerPath.ACTIVITIES}`);
             store.modalStore.closeModal();
         } catch (error) {
             throw (error);
         }
-    }
+    };
 
     logout = () => {
         store.commonStore.setToken(null);
         this.user = null;
         router.navigate("/");
-    }
+    };
 
     getUser = async () => {
         try {
@@ -53,11 +53,11 @@ export default class AuthStore {
         } catch (error) {
             console.log(error);
         }
-    }
+    };
 
     setImage = (image: string) => {
         if (this.user) {
             this.user.image = image;
         }
-    }
+    };
 }

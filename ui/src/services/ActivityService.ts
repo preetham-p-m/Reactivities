@@ -10,4 +10,4 @@ export const ActivitiesService = {
     update: (activity: ActivityFormValues) => ApiService.put<void>(`${activityEndPoint}/${activity.id}`, activity),
     delete: (id: string) => ApiService.delete<void>(`${activityEndPoint}/${id}`),
     attend: (id: string) => ApiService.post<void>(`${activityEndPoint}/${id}/attend`, {})
-}
+};

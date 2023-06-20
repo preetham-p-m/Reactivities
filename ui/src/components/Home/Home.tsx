@@ -7,7 +7,7 @@ import Login from "../Auth/Login/Login";
 import Register from "../Auth/Register/Register";
 import { assets } from "../../utils/constants/assets";
 
-const Home = observer(() => {
+const Home = () => {
     const { authStore: userStore, modalStore } = useStore();
 
     return <Segment inverted textAlign="center" vertical className="masthead">
@@ -36,6 +36,6 @@ const Home = observer(() => {
 
         </Container>
     </Segment>;
-});
+};
 
-export default Home;
+export default observer(Home);

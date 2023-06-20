@@ -28,7 +28,7 @@ export default class ActivityStore {
                 const date = format(activity.date, DateFormat.DATE_ONLY);
                 activities[date] = activities[date] ? [...activities[date], activity] : [activity];
                 return activities;
-            }, {} as { [key: string]: Activity[] })
+            }, {} as { [key: string]: Activity[]; })
         );
     }
 
@@ -44,7 +44,7 @@ export default class ActivityStore {
         } catch (error) {
             this.setLoadingInitial(false);
         }
-    }
+    };
 
     loadActivity = async (id: string) => {
         let activity = this.getActivity(id);
@@ -63,26 +63,26 @@ export default class ActivityStore {
         } catch (error) {
             this.setLoadingInitial(false);
         }
-    }
+    };
 
     private setActivity = (activity: Activity) => {
         const user = store.authStore.user;
         if (user) {
             activity.isGoing = activity.attendees!.some(a => a.userName === user.userName);
             activity.isHost = activity.hostUserName === user.userName;
-            activity.host = activity.attendees!.find(a => a.userName === activity.hostUserName)
+            activity.host = activity.attendees!.find(a => a.userName === activity.hostUserName);
         }
         activity.date = new Date(activity.date);
         this.activityRegistry.set(activity.id, activity);
-    }
+    };
 
     private getActivity = (id: string) => {
         return this.activityRegistry.get(id);
-    }
+    };
 
     setLoadingInitial = (state: boolean) => {
         this.loadingInitial = state;
-    }
+    };
 
     createActivity = async (activity: ActivityFormValues) => {
         const user = store.authStore.user;
@@ -99,21 +99,21 @@ export default class ActivityStore {
         } catch (error) {
             console.log(error);
         }
-    }
+    };
 
     updateActivity = async (activity: ActivityFormValues) => {
         try {
             await ActivitiesService.update(activity);
             runInAction(() => {
                 if (activity.id) {
-                    let updateActivity = { ...this.getActivity(activity.id), ...activity }
-                    this.activityRegistry.set(activity.id, updateActivity as Activity)
+                    let updateActivity = { ...this.getActivity(activity.id), ...activity };
+                    this.activityRegistry.set(activity.id, updateActivity as Activity);
                     this.selectedActivity = updateActivity as Activity;
                 }
             });
         } catch (error) {
         }
-    }
+    };
 
     deleteActivity = async (id: string) => {
         this.loading = true;
@@ -122,13 +122,13 @@ export default class ActivityStore {
             runInAction(() => {
                 this.activityRegistry.delete(id);
                 this.loading = false;
-            })
+            });
         } catch (error) {
             runInAction(() => {
                 this.loading = false;
-            })
+            });
         }
-    }
+    };
 
     updateAttendence = async () => {
         const user = store.authStore.user;
@@ -153,7 +153,7 @@ export default class ActivityStore {
                 this.loading = false;
             });
         }
-    }
+    };
 
     cancelActivityToggle = async () => {
         this.loading = true;
@@ -162,13 +162,17 @@ export default class ActivityStore {
             runInAction(() => {
                 this.selectedActivity!.isCancelled = !this.selectedActivity?.isCancelled;
                 this.activityRegistry.set(this.selectedActivity!.id, this.selectedActivity!);
-            })
+            });
         } catch (error) {
             console.log(error);
         } finally {
             runInAction(() => {
                 this.loading = false;
-            })
+            });
         }
-    }
+    };
+
+    clearSelectedActivity = () => {
+        this.selectedActivity = undefined;
+    };
 }

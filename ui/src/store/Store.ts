@@ -4,13 +4,15 @@ import CommonStore from "./CommonStore";
 import AuthStore from "./AuthStore";
 import MadalStore from "./ModalStore";
 import { UserProfileStore } from "./UserProfileStore";
+import CommentStore from "./CommentStore";
 
 interface Store {
-    activityStore: ActivityStore,
-    commonStore: CommonStore,
-    authStore: AuthStore,
-    modalStore: MadalStore,
-    userProfileStore: UserProfileStore
+    activityStore: ActivityStore;
+    commonStore: CommonStore;
+    authStore: AuthStore;
+    modalStore: MadalStore;
+    userProfileStore: UserProfileStore;
+    commentStore: CommentStore;
 }
 
 export const store: Store = {
@@ -18,8 +20,9 @@ export const store: Store = {
     commonStore: new CommonStore(),
     authStore: new AuthStore(),
     modalStore: new MadalStore(),
-    userProfileStore: new UserProfileStore()
-}
+    userProfileStore: new UserProfileStore(),
+    commentStore: new CommentStore()
+};
 
 export const StoreContext = createContext(store);
 

@@ -14,4 +14,4 @@ export const PhotosService = {
         },
     setMainPhoto: (id: string) => ApiService.post(`Photos/${id}/set-main`, {}),
     deletePhoto: (id: string) => ApiService.delete(`Photos/${id}`),
-}
+};

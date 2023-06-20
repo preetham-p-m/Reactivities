@@ -3,7 +3,7 @@ import { useStore } from "../../../store/Store";
 import { Button, Container, Header, Icon, Segment } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
-const ServerError = observer(() => {
+const ServerError = () => {
   const { commonStore } = useStore();
   return (
     <Container>
@@ -26,6 +26,6 @@ const ServerError = observer(() => {
       )}
     </Container>
   );
-});
+};
 
-export default ServerError;
+export default observer(ServerError);

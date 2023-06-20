@@ -1,8 +1,8 @@
 import { Cropper } from "react-cropper";
-import "cropperjs/dist/cropper.css"
+import "cropperjs/dist/cropper.css";
 
 interface PhotoWidgetCropperProps {
-    imagePreview: string,
+    imagePreview: string;
     setCropper: (cropper: Cropper) => void;
 }
 
@@ -21,6 +21,6 @@ const PhotoWidgetCropper = ({ imagePreview, setCropper }: PhotoWidgetCropperProp
             onInitialized={cropper => setCropper(cropper)}
         />
     );
-}
+};
 
 export default PhotoWidgetCropper;

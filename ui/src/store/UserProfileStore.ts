@@ -31,7 +31,7 @@ export class UserProfileStore {
         } finally {
             runInAction(() => this.loadingProfile = false);
         }
-    }
+    };
 
     uploadPhoto = async (file: Blob) => {
         this.uploading = true;
@@ -55,7 +55,7 @@ export class UserProfileStore {
                 this.uploading = false
             );
         }
-    }
+    };
 
     setMainPhoto = async (photo: Photo) => {
         this.loading = true;
@@ -74,7 +74,7 @@ export class UserProfileStore {
         } finally {
             runInAction(() => this.loading = false);
         }
-    }
+    };
 
     deletePhoto = async (photo: Photo) => {
         this.loading = true;
@@ -90,5 +90,5 @@ export class UserProfileStore {
         } finally {
             runInAction(() => this.loading = false);
         }
-    }
+    };
 }

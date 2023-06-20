@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import { Button, Header, Item, Segment, Image, Label } from 'semantic-ui-react'
+import { Button, Header, Item, Segment, Image, Label } from 'semantic-ui-react';
 import { Activity } from '../../../../@types/Activity';
 import { Link } from 'react-router-dom';
 import { routerPath } from '../../../../utils/router/routerPath';
@@ -22,10 +22,10 @@ const activityImageTextStyle = {
 };
 
 interface Props {
-  activity: Activity
+  activity: Activity;
 }
 
-const ActivityDetailedHeader = observer(({ activity }: Props) => {
+const ActivityDetailedHeader = ({ activity }: Props) => {
   const { activityStore: { updateAttendence, loading, cancelActivityToggle } } = useStore();
   return (
     <Segment.Group>
@@ -91,7 +91,7 @@ const ActivityDetailedHeader = observer(({ activity }: Props) => {
         }
       </Segment>
     </Segment.Group>
-  )
-});
+  );
+};
 
-export default ActivityDetailedHeader;
+export default observer(ActivityDetailedHeader);

@@ -15,6 +15,6 @@ const NotFound = () => {
       </Segment.Inline>
     </Segment>
   );
-}
+};
 
 export default NotFound;
