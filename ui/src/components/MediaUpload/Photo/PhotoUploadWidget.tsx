@@ -17,14 +17,14 @@ const PhotoUploadWidget = ({ uploadPhoto, loading }: PhotoUploadWidgetProps) => 
         if (cropper) {
             cropper.getCroppedCanvas().toBlob(blob => uploadPhoto(blob!));
         }
-    }
+    };
 
     useEffect(() => {
         return () => {
             files.forEach((file: any) => {
                 URL.revokeObjectURL(file.preview);
             });
-        }
+        };
     }, [files]);
 
     return (
@@ -54,6 +54,6 @@ const PhotoUploadWidget = ({ uploadPhoto, loading }: PhotoUploadWidgetProps) => 
                     </>}
             </Grid.Column>
         </Grid>);
-}
+};
 
 export default PhotoUploadWidget;

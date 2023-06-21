@@ -1,15 +1,15 @@
-import React from 'react'
-import { Segment, List, Label, Item, Image } from 'semantic-ui-react'
-import { Link } from 'react-router-dom'
-import { observer } from 'mobx-react-lite'
-import { routerPath } from '../../../../utils/router/routerPath'
-import { Activity } from '../../../../@types/Activity'
+import React from 'react';
+import { Segment, List, Label, Item, Image } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
+import { routerPath } from '../../../../utils/router/routerPath';
+import { Activity } from '../../../../@types/Activity';
 
 interface ActivityDetailedSidebarProps {
-  activity: Activity
+  activity: Activity;
 }
 
-const ActivityDetailedSidebar = observer(({ activity: { attendees, host } }: ActivityDetailedSidebarProps) => {
+const ActivityDetailedSidebar = ({ activity: { attendees, host } }: ActivityDetailedSidebarProps) => {
   return (
     <>
       {attendees &&
@@ -53,7 +53,7 @@ const ActivityDetailedSidebar = observer(({ activity: { attendees, host } }: Act
         </>}
     </>
 
-  )
-});
+  );
+};
 
-export default ActivityDetailedSidebar;
+export default observer(ActivityDetailedSidebar);

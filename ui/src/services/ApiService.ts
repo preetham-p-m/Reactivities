@@ -3,8 +3,9 @@ import { toast } from 'react-toastify';
 import { router } from '../Routes';
 import { store } from '../store/Store';
 import { routerPath } from '../utils/router/routerPath';
+import { Environment } from '../Environment';
 
-axios.defaults.baseURL = "http://localhost:5000/api";
+axios.defaults.baseURL = Environment.serviceApiUrl;
 
 const responseBody = <T>(respose: AxiosResponse<T>) => respose.data;
 
@@ -19,7 +20,7 @@ axios.interceptors.request.use(config => {
     if (token && config.headers)
         config.headers.Authorization = `Bearer ${token}`;
     return config;
-})
+});
 
 axios.interceptors.response.use(async response => {
     await sleep(1000);
@@ -28,7 +29,7 @@ axios.interceptors.response.use(async response => {
     const { data, status, config } = error.response as AxiosResponse;
     switch (status) {
         case 400:
-            console.log(data)
+            console.log(data);
             if (config.method === "get" && data.errors.hasOwnProperty("id")) {
                 router.navigate(`/${routerPath.NOT_FOUND}`);
             }
@@ -77,4 +78,4 @@ export const ApiService = {
         const respose = await axios.delete<T>(url);
         return responseBody(respose);
     },
-}
+};

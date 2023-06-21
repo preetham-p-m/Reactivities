@@ -1,23 +1,23 @@
 import { User } from "./User";
 
 export interface Profile {
-    userName: string,
-    displayName: string,
-    bio?: string,
-    image?: string,
-    photos?: Photo[]
+    userName: string;
+    displayName: string;
+    bio?: string;
+    image?: string;
+    photos?: Photo[];
 }
 
 export class Profile implements Profile {
     constructor(user: User) {
         this.userName = user.userName;
         this.displayName = user.displayName;
-        this.image = user.image
+        this.image = user.image;
     }
 }
 
 export interface Photo {
-    id: string,
-    url: string,
-    isMain: boolean
+    id: string;
+    url: string;
+    isMain: boolean;
 }

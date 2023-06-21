@@ -13,6 +13,6 @@ const ActivityFilters = () => {
       <Calendar />
     </>
   );
-}
+};
 
 export default ActivityFilters;

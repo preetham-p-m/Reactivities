@@ -38,6 +38,22 @@ public static class IdentityServiceExtension
                     ValidateAudience = false,
                     ValidateIssuer = false
                 };
+                opt.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context =>
+                    {
+                        var accessToken = context.Request.Query[Message.AccessToken];
+                        var path = context.HttpContext.Request.Path;
+                        if (
+                            !string.IsNullOrEmpty(accessToken)
+                            && path.StartsWithSegments(Message.PathChat)
+                        )
+                        {
+                            context.Token = accessToken;
+                        }
+                        return Task.CompletedTask;
+                    }
+                };
             });
 
         service.AddAuthorization(opt =>

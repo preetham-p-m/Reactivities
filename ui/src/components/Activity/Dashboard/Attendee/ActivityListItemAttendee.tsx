@@ -7,10 +7,10 @@ import ProfileCard from "../../../User/ProfileCard/ProfileCard";
 import { assets } from "../../../../utils/constants/assets";
 
 interface ActivityListItemAttendeeProps {
-    attendees: Profile[]
+    attendees: Profile[];
 }
 
-const ActivityListItemAttendee = observer(({ attendees }: ActivityListItemAttendeeProps) => {
+const ActivityListItemAttendee = ({ attendees }: ActivityListItemAttendeeProps) => {
     return (
         <List horizontal>
             {attendees.map(attendee => (
@@ -29,6 +29,6 @@ const ActivityListItemAttendee = observer(({ attendees }: ActivityListItemAttend
                 </Popup>
             ))}
         </List>);
-});
+};
 
-export default ActivityListItemAttendee;
+export default observer(ActivityListItemAttendee);

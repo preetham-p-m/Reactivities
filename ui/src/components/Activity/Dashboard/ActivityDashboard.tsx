@@ -6,7 +6,7 @@ import { useStore } from "../../../store/Store";
 import Spinner from "../../Common/Spinner";
 import ActivityFilters from "./Filters/ActivityFilters";
 
-const ActivityDashboard = observer(() => {
+const ActivityDashboard = () => {
 
     const { activityStore } = useStore();
     const { loadActivities, activityRegistry } = activityStore;
@@ -30,6 +30,6 @@ const ActivityDashboard = observer(() => {
             }
         </>
     );
-});
+};
 
-export default ActivityDashboard;
+export default observer(ActivityDashboard);

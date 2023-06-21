@@ -1,15 +1,15 @@
 import { observer } from 'mobx-react-lite';
-import React from 'react'
-import { Segment, Grid, Icon } from 'semantic-ui-react'
+import React from 'react';
+import { Segment, Grid, Icon } from 'semantic-ui-react';
 import { Activity } from '../../../../@types/Activity';
 import { DateFormat } from '../../../../@types/CommonUtils';
 import { format } from "date-fns";
 
 interface Props {
-  activity: Activity
+  activity: Activity;
 }
 
-const ActivityDetailedInfo = observer(({ activity }: Props) => {
+const ActivityDetailedInfo = ({ activity }: Props) => {
   return (
     <Segment.Group>
       <Segment attached='top'>
@@ -45,7 +45,7 @@ const ActivityDetailedInfo = observer(({ activity }: Props) => {
         </Grid>
       </Segment>
     </Segment.Group>
-  )
-});
+  );
+};
 
-export default ActivityDetailedInfo;
+export default observer(ActivityDetailedInfo);

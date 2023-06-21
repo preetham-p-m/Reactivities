@@ -1,3 +1,4 @@
+using API.Constants;
 using Application.Activities;
 using Application.Core.Mapping;
 using Application.Interface;
@@ -41,7 +42,11 @@ public static class ApplicationServiceExtensions
                 policy =>
                 {
                     // white-listing UI application
-                    policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3000");
+                    policy
+                        .AllowAnyMethod()
+                        .AllowAnyHeader()
+                        .AllowCredentials()
+                        .WithOrigins(Auth.UiServiceUrl);
                 }
             );
         });
@@ -64,12 +69,14 @@ public static class ApplicationServiceExtensions
         loggingBuilder.ClearProviders();
         loggingBuilder.AddSerilog(logger);
 
-        // injecting IUserAccessor and enable use of AddHttpContextAccessor in infrastructure project
+        // Adding DI service and enable use of AddHttpContextAccessor
         services.AddHttpContextAccessor();
         services.AddScoped<IUserAccessor, UserAccessor>();
         services.AddScoped<IMediaAccessor, MediaAccessor>();
 
         services.Configure<CloudinarySettings>(configuration.GetSection("Cloudinary"));
+
+        services.AddSignalR();
 
         return services;
     }

@@ -5,7 +5,7 @@ import { useStore } from "../../store/Store";
 import { observer } from "mobx-react-lite";
 import { assets } from "../../utils/constants/assets";
 
-const NavBar = observer(() => {
+const NavBar = () => {
     const { authStore: { user, logout } } = useStore();
     return (
         <Menu inverted fixed="top">
@@ -19,7 +19,7 @@ const NavBar = observer(() => {
                     <Button positive as={NavLink} to={`/${routerPath.CREATE_ACTIVITY}`}>Create Activity</Button>
                 </Menu.Item>
                 <Menu.Item position="right">
-                    <Image src={user?.image || './assets/user.png'} avatar spaced="right" />
+                    <Image src={user?.image || assets.USER} avatar spaced="right" />
                     <Dropdown pointing="top left" text={user?.displayName}>
                         <DropdownMenu>
                             <DropdownItem as={Link} to={`/${routerPath.PROFILE}/${user?.userName}`} text="My Profile" icon="user" />
@@ -30,6 +30,6 @@ const NavBar = observer(() => {
             </Container>
         </Menu>
     );
-});
+};
 
-export default NavBar;
+export default observer(NavBar);

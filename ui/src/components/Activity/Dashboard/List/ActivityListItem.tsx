@@ -8,7 +8,7 @@ import ActivityListItemAttendee from "../Attendee/ActivityListItemAttendee";
 import { assets } from "../../../../utils/constants/assets";
 
 interface Props {
-  activity: Activity
+  activity: Activity;
 }
 
 const ActivityListItem = ({ activity }: Props) => {
@@ -53,6 +53,6 @@ const ActivityListItem = ({ activity }: Props) => {
       </Segment>
     </SegmentGroup>
   );
-}
+};
 
 export default ActivityListItem;

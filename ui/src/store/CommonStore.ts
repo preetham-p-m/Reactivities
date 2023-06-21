@@ -16,18 +16,18 @@ export default class CommonStore {
       } else {
         localStorage.removeItem(auth.JWT_TOKEN);
       }
-    })
+    });
   }
 
   setServerError(error: ServerError) {
-    this.error = error
+    this.error = error;
   }
 
   setToken = (token: string | null) => {
     this.token = token;
-  }
+  };
 
   setAppLoaded = () => {
     this.appLoaded = true;
-  }
+  };
 }

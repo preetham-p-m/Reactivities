@@ -46,7 +46,7 @@ const Errors = () => {
       </Segment>
       {error && <ValidationError errors={error} />}
     </>
-  )
-}
+  );
+};
 
 export default Errors;

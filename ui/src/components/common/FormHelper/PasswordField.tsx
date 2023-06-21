@@ -14,6 +14,6 @@ const PasswordField = () => {
         <input {...state} {...field} />
         {meta.touched && !!meta.error ? <Label basic color="red">{meta.error}</Label> : null}
     </Form.Field>);
-}
+};
 
 export default PasswordField;

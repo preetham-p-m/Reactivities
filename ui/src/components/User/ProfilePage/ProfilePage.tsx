@@ -7,8 +7,8 @@ import { useStore } from "../../../store/Store";
 import { useEffect } from "react";
 import Spinner from "../../Common/Spinner";
 
-const ProfilePage = observer(() => {
-    const { username } = useParams<{ username: string }>();
+const ProfilePage = () => {
+    const { username } = useParams<{ username: string; }>();
     const { userProfileStore: { loadProfile, loadingProfile, profile } } = useStore();
 
     useEffect(() => {
@@ -32,6 +32,6 @@ const ProfilePage = observer(() => {
             }
         </>
     );
-});
+};
 
-export default ProfilePage;
+export default observer(ProfilePage);

@@ -9,4 +9,4 @@ export const routerPath = {
   LOGIN: "login",
   PROFILE: "profile",
   USER_NAME: ":username"
-}
+};

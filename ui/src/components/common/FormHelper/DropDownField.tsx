@@ -2,14 +2,14 @@ import { useField } from "formik";
 import { Form, Label, Select } from "semantic-ui-react";
 
 interface DropDownFieldProps {
-  placeholder: string
-  name: string,
-  label?: string,
-  options: any
+  placeholder: string;
+  name: string;
+  label?: string;
+  options: any;
 }
 
 const DropDownField = (props: DropDownFieldProps) => {
-  const [field, meta, helpers] = useField(props.name)
+  const [field, meta, helpers] = useField(props.name);
 
   return (
     <Form.Field error={meta.touched && !!meta.error}>
@@ -27,6 +27,6 @@ const DropDownField = (props: DropDownFieldProps) => {
         : null}
     </Form.Field>
   );
-}
+};
 
 export default DropDownField;
