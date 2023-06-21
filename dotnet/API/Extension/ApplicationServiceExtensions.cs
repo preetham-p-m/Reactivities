@@ -1,3 +1,4 @@
+using API.Constants;
 using Application.Activities;
 using Application.Core.Mapping;
 using Application.Interface;
@@ -45,7 +46,7 @@ public static class ApplicationServiceExtensions
                         .AllowAnyMethod()
                         .AllowAnyHeader()
                         .AllowCredentials()
-                        .WithOrigins("http://localhost:3000");
+                        .WithOrigins(Auth.UiServiceUrl);
                 }
             );
         });

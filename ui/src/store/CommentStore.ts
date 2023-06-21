@@ -2,6 +2,8 @@ import { makeAutoObservable, runInAction } from "mobx";
 import { ChatComment } from "../@types/ChatComment";
 import { HubConnection, HubConnectionBuilder, LogLevel } from "@microsoft/signalr";
 import { store } from "./Store";
+import { Environment } from "../Environment";
+import { signalRConst } from "../utils/constants/signalRConst";
 
 export default class CommentStore {
     comments: ChatComment[] = [];
@@ -14,7 +16,7 @@ export default class CommentStore {
     createHubConnection = (activityId: string) => {
         if (store.activityStore.selectedActivity) {
             this.hubConnection = new HubConnectionBuilder()
-                .withUrl("http://localhost:5000/chat?activityId=" + activityId,
+                .withUrl(`${Environment.serviceChatUrl}?${signalRConst.ACTIVITY_ID}=${activityId}`,
                     {
                         accessTokenFactory: () => store.authStore.user?.token!
                     })
@@ -23,7 +25,7 @@ export default class CommentStore {
                 .build();
 
             this.hubConnection.start().catch(error => console.log("Error establishing thr connection"));
-            this.hubConnection.on("LoadComments", (comments: ChatComment[]) => {
+            this.hubConnection.on(signalRConst.LOAD_COMMENTS, (comments: ChatComment[]) => {
                 runInAction(() => {
                     comments.forEach(comment => {
                         comment.createdAt = new Date(comment.createdAt + "Z");
@@ -32,7 +34,7 @@ export default class CommentStore {
                 });
             });
 
-            this.hubConnection.on("ReceiveComment", (comment: ChatComment) => {
+            this.hubConnection.on(signalRConst.RECEIVE_COMMENT, (comment: ChatComment) => {
                 runInAction(() => {
                     comment.createdAt = new Date(comment.createdAt);
                     this.comments.unshift(comment);
@@ -54,8 +56,7 @@ export default class CommentStore {
         values.activityId = store.activityStore.selectedActivity?.id;
 
         try {
-            this.hubConnection?.invoke("SendComment", values);
-
+            this.hubConnection?.invoke(signalRConst.SEND_COMMENT, values);
         } catch (error) {
             console.log(error);
         }

@@ -3,8 +3,9 @@ import { toast } from 'react-toastify';
 import { router } from '../Routes';
 import { store } from '../store/Store';
 import { routerPath } from '../utils/router/routerPath';
+import { Environment } from '../Environment';
 
-axios.defaults.baseURL = "http://localhost:5000/api";
+axios.defaults.baseURL = Environment.serviceApiUrl;
 
 const responseBody = <T>(respose: AxiosResponse<T>) => respose.data;
 
