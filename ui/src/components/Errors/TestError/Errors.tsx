@@ -2,9 +2,10 @@ import { Button, Header, Segment } from "semantic-ui-react";
 import axios from 'axios';
 import { useState } from "react";
 import ValidationError from "../Validation/ValidationError";
+import { Environment } from "../../../Environment";
 
 const Errors = () => {
-  const baseUrl = 'http://localhost:5000/api/';
+  const baseUrl = Environment.serviceApiUrl + "/";
   const [error, setError] = useState();
 
   function handleNotFound() {

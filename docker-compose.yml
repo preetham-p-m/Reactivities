@@ -1,0 +1,32 @@
+version: "3.4"
+
+services:
+    db:
+        image: mysql
+        ports:
+            - 3306:3306
+        volumes:
+            - ~/apps/mysql:/var/lib/mysql
+        environment:
+            - MYSQL_ROOT_PASSWORD=Welcome12
+            - MYSQL_PASSWORD=standalone
+            - MYSQL_USER=root
+            - MYSQL_DATABASE=reactivities
+        networks:
+            - mynet
+
+    api.host:
+        ports:
+            - 8080:80
+        build:
+            context: .
+            dockerfile: Dockerfile
+        depends_on:
+            - db
+        networks:   
+            - mynet
+
+networks:
+  mynet:
+    name: mynet
+    driver: bridge

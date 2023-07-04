@@ -2,7 +2,7 @@ import { Fragment, useEffect } from "react";
 import { Container } from "semantic-ui-react";
 import NavBar from "./components/Common/NavBar";
 import { observer } from "mobx-react-lite";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, ScrollRestoration, useLocation } from "react-router-dom";
 import Home from "./components/Home/Home";
 import { ToastContainer } from "react-toastify";
 import { useStore } from "./store/Store";
@@ -23,6 +23,7 @@ const App = () => {
 
     return (
         <Fragment>
+            <ScrollRestoration />
             {commonStore.appLoaded
                 ? <>
                     <ModalContainer />

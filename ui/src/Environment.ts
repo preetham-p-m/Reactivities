@@ -1,6 +1,6 @@
-const serviceUrl = "http://localhost:5000";
+const serviceUrl = process.env.REACT_APP_URL;
 
 export const Environment = {
-    serviceApiUrl: serviceUrl + "/api",
-    serviceChatUrl: serviceUrl + "/chat",
+    serviceApiUrl: serviceUrl + "api",
+    serviceChatUrl: serviceUrl + "chat",
 };

@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { toast } from 'react-toastify';
-import { router } from '../Routes';
+import { router } from '../utils/router/Routes';
 import { store } from '../store/Store';
 import { routerPath } from '../utils/router/routerPath';
 import { Environment } from '../Environment';
@@ -10,12 +10,6 @@ axios.defaults.baseURL = Environment.serviceApiUrl;
 
 const responseBody = <T>(respose: AxiosResponse<T>) => respose.data;
 
-const sleep = (delay: number) => {
-    return new Promise((resolve) => {
-        setTimeout(resolve, delay);
-    });
-};
-
 axios.interceptors.request.use(config => {
     const token = store.commonStore.token;
     if (token && config.headers)
@@ -24,7 +18,6 @@ axios.interceptors.request.use(config => {
 });
 
 axios.interceptors.response.use(async response => {
-    await sleep(1000);
     const pagination = response.headers["pagination"];
     if (pagination) {
         response.data = new PaginatedResult(response.data, JSON.parse(pagination));
