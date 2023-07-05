@@ -1,26 +1,28 @@
 import { observer } from "mobx-react-lite";
-import { Profile } from "../../../@types/Profile";
+import { User } from "../../../@types/User";
 import { Card, Icon, Image } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { routerPath } from "../../../utils/router/routerPath";
 import { assets } from "../../../utils/constants/assets";
+import FollowButton from "../FollowButton/FollowButton";
 
 interface ProfileCardProps {
-    profile: Profile;
+    user: User;
 }
 
-const ProfileCard = ({ profile }: ProfileCardProps) => {
+const ProfileCard = ({ user }: ProfileCardProps) => {
     return (
-        <Card as={Link} to={`/${routerPath.PROFILE}/${profile.userName}`}>
-            <Image src={profile.image || assets.USER} />
+        <Card as={Link} to={`/${routerPath.PROFILE}/${user.userName}`}>
+            <Image src={user.image || assets.USER} />
             <Card.Content>
-                <Card.Header>{profile.displayName}</Card.Header>
+                <Card.Header>{user.displayName}</Card.Header>
                 <Card.Description>Bio goes here</Card.Description>
             </Card.Content>
             <Card.Content extra>
                 <Icon name="user" />
-                20 followers
+                {user.followersCount} {user.followersCount <= 1 ? "follower" : "followers"}
             </Card.Content>
+            <FollowButton user={user} />
         </Card>
     );
 };

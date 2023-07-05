@@ -9,13 +9,16 @@ import Spinner from "../../Common/Spinner";
 
 const ProfilePage = () => {
     const { username } = useParams<{ username: string; }>();
-    const { userProfileStore: { loadProfile, loadingProfile, profile } } = useStore();
+    const { userProfileStore: { loadProfile, loadingProfile, user, setActiveTab } } = useStore();
 
     useEffect(() => {
         if (username) {
             loadProfile(username);
         }
-    }, [username, loadProfile]);
+        return () => {
+            setActiveTab(0);
+        };
+    }, [username, loadProfile, setActiveTab]);
 
     return (
         <>
@@ -23,8 +26,8 @@ const ProfilePage = () => {
                 ? <Spinner content="Loading Profile..." />
                 : <Grid>
                     <Grid.Column width={16}>
-                        {profile && <>
-                            <ProfileHeader profile={profile} />
+                        {user && <>
+                            <ProfileHeader user={user} />
                             <ProfileContent />
                         </>}
                     </Grid.Column>

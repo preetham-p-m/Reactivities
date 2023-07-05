@@ -1,12 +1,12 @@
 import { makeAutoObservable, runInAction } from "mobx";
-import { LoginUser, RegisterUser, User } from "../@types/User";
+import { LoginUser, RegisterUser, AuthUser } from "../@types/Auth";
 import { AccountService } from "../Services/AccountService";
 import { store } from "./Store";
 import { router } from "../Routes";
 import { routerPath } from "../utils/router/routerPath";
 
 export default class AuthStore {
-    user: User | null = null;
+    user: AuthUser | null = null;
 
     constructor() {
         makeAutoObservable(this);

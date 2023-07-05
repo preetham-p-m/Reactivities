@@ -8,6 +8,8 @@ public class User : IdentityUser
     public string Bio { get; set; }
     public ICollection<ActivityUser> Activities { get; set; }
     public ICollection<Photo> Photos { get; set; }
+    public ICollection<UserFollowing> Followings { get; set; }
+    public ICollection<UserFollowing> Followers { get; set; }
 
     public User()
     {

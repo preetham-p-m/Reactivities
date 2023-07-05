@@ -1,18 +1,26 @@
+import { AuthUser } from "./Auth";
+
 export interface User {
-    displayName: string;
     userName: string;
-    token: string;
+    displayName: string;
+    bio?: string;
     image?: string;
+    photos?: Photo[];
+    followingCount: number;
+    followersCount: number;
+    following: boolean;
 }
 
-export interface LoginUser {
-    email: string;
-    password: string;
+export class User implements User {
+    constructor(user: AuthUser) {
+        this.userName = user.userName;
+        this.displayName = user.displayName;
+        this.image = user.image;
+    }
 }
 
-export interface RegisterUser {
-    email: string;
-    password: string;
-    displayName: string;
-    userName: string;
+export interface Photo {
+    id: string;
+    url: string;
+    isMain: boolean;
 }
