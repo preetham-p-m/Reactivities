@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Photo } from "../@types/Profile";
+import { Photo } from "../@types/User";
 import { ApiService } from "./ApiService";
 
 export const PhotosService = {

@@ -3,7 +3,7 @@ import { Activity, ActivityFormValues } from "../@types/Activity";
 import { ActivitiesService } from "../Services/ActivityService";
 import { DateFormat } from "../@types/CommonUtils";
 import { format } from "date-fns";
-import { Profile } from "../@types/Profile";
+import { User } from "../@types/User";
 import { store } from "./Store";
 
 export default class ActivityStore {
@@ -86,7 +86,7 @@ export default class ActivityStore {
 
     createActivity = async (activity: ActivityFormValues) => {
         const user = store.authStore.user;
-        const attendee = new Profile(user!);
+        const attendee = new User(user!);
         try {
             await ActivitiesService.create(activity);
             const newActivity = new Activity(activity);
@@ -140,7 +140,7 @@ export default class ActivityStore {
                     this.selectedActivity.attendees = this.selectedActivity.attendees?.filter(a => a.userName !== user?.userName);
                     this.selectedActivity.isGoing = false;
                 } else {
-                    const attendee = new Profile(user!);
+                    const attendee = new User(user!);
                     this.selectedActivity?.attendees?.push(attendee);
                     this.selectedActivity!.isGoing = true;
                 }
@@ -174,5 +174,16 @@ export default class ActivityStore {
 
     clearSelectedActivity = () => {
         this.selectedActivity = undefined;
+    };
+
+    updateAttendeeFollowing = (userName: string) => {
+        this.activityRegistry.forEach(activity => {
+            activity.attendees.forEach(attendee => {
+                if (attendee.userName === userName) {
+                    attendee.following ? attendee.followersCount-- : attendee.followersCount++;
+                    attendee.following = !attendee.following;
+                }
+            });
+        });
     };
 }

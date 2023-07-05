@@ -1,4 +1,7 @@
+using System.Reflection;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Persistence.EntityBuilder;
+using Persistence.EntityConfiguration;
 
 namespace Persistence;
 
@@ -11,29 +14,13 @@ public class DataContext : IdentityDbContext<User>
     public DbSet<ActivityUser> ActivityAttendees { get; set; }
     public DbSet<Photo> Photos { get; set; }
     public DbSet<Comment> Comments { get; set; }
+    public DbSet<UserFollowing> UserFollowings { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
+        // Apply all configuration file which are extending IEntityTypeConfiguration<EntityName>
+        builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
         base.OnModelCreating(builder);
-
-        builder.Entity<ActivityUser>(x => x.HasKey(aa => new { aa.UserId, aa.ActivityId }));
-
-        builder
-            .Entity<ActivityUser>()
-            .HasOne(u => u.User)
-            .WithMany(a => a.Activities)
-            .HasForeignKey(aa => aa.UserId);
-
-        builder
-            .Entity<ActivityUser>()
-            .HasOne(a => a.Activity)
-            .WithMany(u => u.Attendees)
-            .HasForeignKey(aa => aa.ActivityId);
-
-        builder
-            .Entity<Comment>()
-            .HasOne(a => a.Activity)
-            .WithMany(c => c.Comments)
-            .OnDelete(DeleteBehavior.Cascade);
     }
 }

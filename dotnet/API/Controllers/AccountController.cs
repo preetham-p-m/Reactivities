@@ -25,7 +25,7 @@ public class AccountController : ControllerBase
 
     [AllowAnonymous]
     [HttpPost("login")]
-    public async Task<ActionResult<UserAuthDto>> Login(LoginDto loginDto)
+    public async Task<ActionResult<AuthUserDto>> Login(LoginDto loginDto)
     {
         var user = await UserManager.Users
             .Include(u => u.Photos)
@@ -46,7 +46,7 @@ public class AccountController : ControllerBase
 
     [AllowAnonymous]
     [HttpPost("register")]
-    public async Task<ActionResult<UserAuthDto>> Register(RegisterDto registerDto)
+    public async Task<ActionResult<AuthUserDto>> Register(RegisterDto registerDto)
     {
         if (await UserManager.Users.AnyAsync(e => e.UserName == registerDto.UserName))
         {
@@ -80,7 +80,7 @@ public class AccountController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<UserAuthDto>> GetCurrentUser()
+    public async Task<ActionResult<AuthUserDto>> GetCurrentUser()
     {
         var user = await UserManager.Users
             .Include(u => u.Photos)
@@ -88,9 +88,9 @@ public class AccountController : ControllerBase
         return CreateUserDtoObject(user);
     }
 
-    private UserAuthDto CreateUserDtoObject(User user)
+    private AuthUserDto CreateUserDtoObject(User user)
     {
-        return new UserAuthDto
+        return new AuthUserDto
         {
             DisplayName = user.UserName,
             Image = user?.Photos?.FirstOrDefault(p => p.IsMain)?.Url,

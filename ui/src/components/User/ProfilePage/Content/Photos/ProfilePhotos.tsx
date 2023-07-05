@@ -3,11 +3,11 @@ import { Button, Card, Grid, Header, Image, Tab } from "semantic-ui-react";
 import { useStore } from "../../../../../store/Store";
 import { SyntheticEvent, useState } from "react";
 import PhotoUploadWidget from "../../../../MediaUpload/Photo/PhotoUploadWidget";
-import { Photo } from "../../../../../@types/Profile";
+import { Photo } from "../../../../../@types/User";
 
 const ProfilePhotos = () => {
     const {
-        userProfileStore: { profile, isCurrentUser,
+        userProfileStore: { user: profile, isCurrentUser,
             uploadPhoto, uploading,
             setMainPhoto, deletePhoto, loading } }
         = useStore();
@@ -17,12 +17,12 @@ const ProfilePhotos = () => {
 
     const handlePhotoUpload = (file: Blob) => {
         uploadPhoto(file).then(() => setAddPhotoMode(false));
-    }
+    };
 
     const handleSetMainPhoto = (photo: Photo, e: SyntheticEvent<HTMLButtonElement>) => {
         setTarget(e.currentTarget.name);
         setMainPhoto(photo);
-    }
+    };
 
     const handleDeletePhoto = (photo: Photo, e: SyntheticEvent<HTMLButtonElement>) => {
         setTarget(e.currentTarget.name);
@@ -80,6 +80,6 @@ const ProfilePhotos = () => {
             </Grid>
         </Tab.Pane>
     );
-}
+};
 
 export default observer(ProfilePhotos);
