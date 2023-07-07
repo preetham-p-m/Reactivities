@@ -1,10 +1,11 @@
-import { makeAutoObservable, runInAction } from "mobx";
+import { makeAutoObservable, reaction, runInAction } from "mobx";
 import { Activity, ActivityFormValues } from "../@types/Activity";
 import { ActivitiesService } from "../Services/ActivityService";
 import { DateFormat } from "../@types/CommonUtils";
 import { format } from "date-fns";
 import { User } from "../@types/User";
 import { store } from "./Store";
+import { Pagination, PagingParams } from "../@types/Pagination";
 
 export default class ActivityStore {
     activityRegistry = new Map<string, Activity>();
@@ -12,9 +13,17 @@ export default class ActivityStore {
     editMode = false;
     loading = false;
     loadingInitial = false;
+    pagination: Pagination | null = null;
+    pagingParams = new PagingParams();
+    predicate = new Map().set("all", true);
 
     constructor() {
         makeAutoObservable(this);
+        reaction(() => this.predicate.keys(), () => {
+            this.pagingParams = new PagingParams();
+            this.activityRegistry.clear();
+            this.loadActivities();
+        });
     }
 
     get activitiesByDate() {
@@ -32,18 +41,72 @@ export default class ActivityStore {
         );
     }
 
+    get axiosParams() {
+        const params = new URLSearchParams();
+        params.append("pageNumber", this.pagingParams.pageNumber.toString());
+        params.append("pageSize", this.pagingParams.pageSize.toString());
+        this.predicate.forEach((value, key) => {
+            if (key === "startDate") {
+                params.append(key, (value as Date).toISOString());
+            } else {
+                params.append(key, value);
+            }
+        });
+        return params;
+    }
+
+    private resetPredicate = () => {
+        this.predicate.forEach((value, key) => {
+            if (key !== "startDate") this.predicate.delete(key);
+        });
+    };
+
+    setPredicate = (key: string, value: string | Date) => {
+        switch (key) {
+            case "all":
+                this.resetPredicate();
+                this.predicate.set("all", true);
+                break;
+            case "isGoing":
+                this.resetPredicate();
+                this.predicate.set("isGoing", true);
+                break;
+            case "isHost":
+                this.resetPredicate();
+                this.predicate.set("isHost", true);
+                break;
+            case "startDate":
+                this.predicate.delete("startDate");
+                this.predicate.set("startDate", value);
+                break;
+        }
+    };
+
+    setPagingParams = (pagingParams: PagingParams) => {
+        this.pagingParams = pagingParams;
+    };
+
     loadActivities = async () => {
         this.setLoadingInitial(true);
         try {
-            const activities = await ActivitiesService.getList();
-            activities.forEach((activity: Activity) => {
-                this.setActivity(activity);
-                this.activityRegistry.set(activity.id, activity);
+            const result = await ActivitiesService.getList(this.axiosParams);
+            runInAction(() => {
+                result.data.forEach((activity: Activity) => {
+                    this.setActivity(activity);
+                    this.activityRegistry.set(activity.id, activity);
+                });
+                this.setPagination(result.pagination);
                 this.setLoadingInitial(false);
             });
         } catch (error) {
-            this.setLoadingInitial(false);
+            runInAction(() => {
+                this.setLoadingInitial(false);
+            });
         }
+    };
+
+    setPagination = (pagination: Pagination) => {
+        this.pagination = pagination;
     };
 
     loadActivity = async (id: string) => {

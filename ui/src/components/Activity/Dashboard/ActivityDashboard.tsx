@@ -1,33 +1,58 @@
-import { Grid } from "semantic-ui-react";
+import { Grid, Loader } from "semantic-ui-react";
 import ActivityList from "./List/ActivityList";
 import { observer } from "mobx-react-lite";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useStore } from "../../../store/Store";
-import Spinner from "../../Common/Spinner";
 import ActivityFilters from "./Filters/ActivityFilters";
+import { PagingParams } from "../../../@types/Pagination";
+import InfiniteScroll from "react-infinite-scroller";
+import ActivityListItemPlaceholder from "../Placeholder/ActivityListItemPlaceholder";
 
 const ActivityDashboard = () => {
 
     const { activityStore } = useStore();
-    const { loadActivities, activityRegistry } = activityStore;
+    const { loadActivities, activityRegistry, setPagingParams, pagination } = activityStore;
+    const [loadingNext, setLoadingNext] = useState(false);
+
+    const handleGetNext = () => {
+        setLoadingNext(true);
+        setPagingParams(new PagingParams(pagination!.currentPage + 1));
+        loadActivities().then(() => setLoadingNext(false));
+    };
 
     useEffect(() => {
         if (activityRegistry.size <= 1) loadActivities();
     }, [activityRegistry.size, loadActivities]);
 
     return (
-        <>
-            {activityStore.loadingInitial
-                ? <Spinner content="Loading Activities" />
-                : <Grid>
-                    <Grid.Column width='10'>
+        <><Grid>
+            <Grid.Column width={10}>
+                {activityStore.loadingInitial && !loadingNext
+                    ? <>
+                        <ActivityListItemPlaceholder />
+                        <ActivityListItemPlaceholder />
+                        <ActivityListItemPlaceholder />
+                        <ActivityListItemPlaceholder />
+                        <ActivityListItemPlaceholder />
+                    </>
+                    : <InfiniteScroll
+                        pageStart={0}
+                        loadMore={handleGetNext}
+                        hasMore={!loadingNext && !!pagination && pagination.currentPage < pagination.totalPages}
+                        initialLoad={false}
+                    >
                         <ActivityList />
-                    </Grid.Column>
-                    <Grid.Column width="6">
-                        <ActivityFilters />
-                    </Grid.Column>
-                </Grid>
-            }
+                    </InfiniteScroll>
+
+                }
+            </Grid.Column>
+            <Grid.Column width={6}>
+                <ActivityFilters />
+            </Grid.Column>
+            <Grid.Column width={10}>
+                <Loader active={loadingNext} />
+            </Grid.Column>
+        </Grid>
         </>
     );
 };

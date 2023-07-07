@@ -1,3 +1,5 @@
+using API.Extension;
+using Application.Core.Pagination;
 using Application.Core.Result;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -19,6 +21,28 @@ public class BaseApiController : ControllerBase
 
         if (result.IsSuccess == true && result.Value != null)
             return Ok(result.Value);
+
+        if (result.IsSuccess == true && result.Value == null)
+            return NotFound();
+
+        return BadRequest();
+    }
+
+    protected ActionResult HandlePagedResult<T>(Result<PagedList<T>> result)
+    {
+        if (result == null)
+            return NotFound();
+
+        if (result.IsSuccess == true && result.Value != null)
+        {
+            Response.AddPaginationHeader(
+                result.Value.CurrentPage,
+                result.Value.PageSize,
+                result.Value.TotalCount,
+                result.Value.TotolPages
+            );
+            return Ok(result.Value);
+        }
 
         if (result.IsSuccess == true && result.Value == null)
             return NotFound();
