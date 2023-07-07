@@ -12,10 +12,7 @@ namespace API.Extension;
 
 public static class IdentityServiceExtension
 {
-    public static IServiceCollection AddIdentityServices(
-        this IServiceCollection service,
-        IConfiguration configuration
-    )
+    public static IServiceCollection AddIdentityServices(this IServiceCollection service)
     {
         service
             .AddIdentityCore<User>(opt =>

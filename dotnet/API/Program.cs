@@ -26,7 +26,7 @@ public class Program
             opt.Filters.Add(new AuthorizeFilter(policy));
         });
         builder.Services.AddApplicationServices(builder.Configuration, builder.Logging);
-        builder.Services.AddIdentityServices(builder.Configuration);
+        builder.Services.AddIdentityServices();
         builder.Services.AddSwaggerService();
 
         var app = builder.Build();

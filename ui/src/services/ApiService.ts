@@ -4,6 +4,7 @@ import { router } from '../Routes';
 import { store } from '../store/Store';
 import { routerPath } from '../utils/router/routerPath';
 import { Environment } from '../Environment';
+import { PaginatedResult } from '../@types/Pagination';
 
 axios.defaults.baseURL = Environment.serviceApiUrl;
 
@@ -24,6 +25,11 @@ axios.interceptors.request.use(config => {
 
 axios.interceptors.response.use(async response => {
     await sleep(1000);
+    const pagination = response.headers["pagination"];
+    if (pagination) {
+        response.data = new PaginatedResult(response.data, JSON.parse(pagination));
+        return response as AxiosResponse<PaginatedResult<any>>;
+    }
     return response;
 }, (error: AxiosError) => {
     const { data, status, config } = error.response as AxiosResponse;
@@ -62,8 +68,8 @@ axios.interceptors.response.use(async response => {
 });
 
 export const ApiService = {
-    get: async <T>(url: string) => {
-        const respose = await axios.get<T>(url);
+    get: async <T>(url: string, params?: URLSearchParams) => {
+        const respose = await axios.get<T>(url, { params });
         return responseBody(respose);
     },
     post: async <T>(url: string, body: object) => {
