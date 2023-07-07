@@ -480,3 +480,5 @@ $RECYCLE.BIN/
 # DB Files
 **/*.db-shm
 **/*.db-wal
+
+wwwroot/
