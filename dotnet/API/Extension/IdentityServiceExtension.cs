@@ -33,13 +33,15 @@ public static class IdentityServiceExtension
                         Encoding.UTF8.GetBytes(Auth.TokenKey)
                     ),
                     ValidateAudience = false,
-                    ValidateIssuer = false
+                    ValidateIssuer = false,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero
                 };
                 opt.Events = new JwtBearerEvents
                 {
                     OnMessageReceived = context =>
                     {
-                        var accessToken = context.Request.Query[Message.AccessToken];
+                        var accessToken = context.Request.Query[Auth.AccessToken];
                         var path = context.HttpContext.Request.Path;
                         if (
                             !string.IsNullOrEmpty(accessToken)

@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using API.Constants;
 using API.DTO.Auth;
 using API.DTO.User;
 using API.Services;
@@ -38,6 +39,7 @@ public class AccountController : ControllerBase
 
         if (isRightPassword)
         {
+            await SetRefreshToken(user);
             return CreateUserDtoObject(user);
         }
 
@@ -73,6 +75,7 @@ public class AccountController : ControllerBase
 
         if (result.Succeeded)
         {
+            await SetRefreshToken(user);
             return CreateUserDtoObject(user);
         }
 
@@ -85,7 +88,47 @@ public class AccountController : ControllerBase
         var user = await UserManager.Users
             .Include(u => u.Photos)
             .FirstOrDefaultAsync(u => u.Email == User.FindFirstValue(ClaimTypes.Email));
+
+        await SetRefreshToken(user);
         return CreateUserDtoObject(user);
+    }
+
+    [Authorize]
+    [HttpPost("refreshToken")]
+    public async Task<ActionResult<AuthUserDto>> RefreshToken()
+    {
+        var refreshToken = Request.Cookies[Auth.RefreshToken];
+        var user = await UserManager.Users
+            .Include(u => u.Photos)
+            .Include(u => u.RefreshTokens)
+            .FirstOrDefaultAsync(u => u.UserName == User.FindFirstValue(ClaimTypes.Name));
+
+        if (user == null)
+            return Unauthorized();
+
+        var oldToken = user.RefreshTokens.SingleOrDefault(z => z.Token == refreshToken);
+
+        if (oldToken != null && !oldToken.IsActive)
+            return Unauthorized();
+
+        return CreateUserDtoObject(user);
+    }
+
+    private async Task SetRefreshToken(User user)
+    {
+        var refreshToken = JwtTokenService.GenerateRefreshToken();
+
+        user.RefreshTokens.Add(refreshToken);
+        await UserManager.UpdateAsync(user);
+
+        var cookieOptions = new CookieOptions
+        {
+            HttpOnly = true,
+            Expires = DateTime.UtcNow.AddDays(7),
+            Secure = true
+        };
+
+        Response.Cookies.Append(Auth.RefreshToken, refreshToken.Token, cookieOptions);
     }
 
     private AuthUserDto CreateUserDtoObject(User user)
