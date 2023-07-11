@@ -64,6 +64,8 @@ public static class IdentityServiceExtension
             );
         });
 
+        service.AddAuthentication().AddGoogle();
+
         service.AddTransient<IAuthorizationHandler, IsHostRequirementHandler>();
         service.AddScoped<JwtTokenService>();
 
