@@ -1,4 +1,5 @@
 using API.Constants;
+using API.BackgroundServices;
 using Application.Activities;
 using Application.Core.Mapping;
 using Application.Interface;
@@ -73,6 +74,7 @@ public static class ApplicationServiceExtensions
         services.AddHttpContextAccessor();
         services.AddScoped<IUserAccessor, UserAccessor>();
         services.AddScoped<IMediaAccessor, MediaAccessor>();
+        services.AddHostedService<ActivityBackgroundService>();
 
         services.Configure<CloudinarySettings>(configuration.GetSection("Cloudinary"));
 
