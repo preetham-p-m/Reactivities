@@ -1,8 +1,4 @@
-# Reactivities (checkout to tag 0.0.2 to get the below result)
-
-command to checkout to tag
-
-### `git checkout 0.0.2`
+# Reactivities
 
 ## Running API Application
 
