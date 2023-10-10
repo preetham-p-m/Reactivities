@@ -1,6 +1,6 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import { LoginUser, RegisterUser, AuthUser } from "../@types/Auth";
-import { AccountService } from "../Services/AccountService";
+import { AccountService } from "../services/AccountService";
 import { store } from "./Store";
 import { router } from "../utils/router/Routes";
 import { routerPath } from "../utils/router/routerPath";
