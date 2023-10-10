@@ -1,9 +1,9 @@
 import { makeAutoObservable, reaction, runInAction } from "mobx";
 import { Photo, User } from "../@types/User";
-import { UserProfileService } from "../Services/UserProfileService";
+import { UserProfileService } from "../services/UserProfileService";
 import { store } from "./Store";
-import { PhotosService } from "../Services/PhotosService";
-import { FollowService } from "../Services/FollowService";
+import { PhotosService } from "../services/PhotosService";
+import { FollowService } from "../services/FollowService";
 
 export class UserProfileStore {
     user: User | null = null;

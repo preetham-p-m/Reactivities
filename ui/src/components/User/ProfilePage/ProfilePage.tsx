@@ -5,7 +5,7 @@ import { observer } from "mobx-react-lite";
 import { useParams } from "react-router-dom";
 import { useStore } from "../../../store/Store";
 import { useEffect } from "react";
-import Spinner from "../../Common/Spinner";
+import Spinner from "../../common/Spinner";
 
 const ProfilePage = () => {
     const { username } = useParams<{ username: string; }>();

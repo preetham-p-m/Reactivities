@@ -1,6 +1,6 @@
 import { makeAutoObservable, reaction, runInAction } from "mobx";
 import { Activity, ActivityFormValues } from "../@types/Activity";
-import { ActivitiesService } from "../Services/ActivityService";
+import { ActivitiesService } from "../services/ActivityService";
 import { DateFormat } from "../@types/CommonUtils";
 import { format } from "date-fns";
 import { User } from "../@types/User";
