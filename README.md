@@ -8,7 +8,7 @@ command to checkout to tag
 
 Creating the MySQL Database `reactivities` using below command
 
-### `create schema reactivities;`
+### `create database reactivities;`
 
 Restore the nuget package using the blow command
 
@@ -30,6 +30,10 @@ Once we are under `API` Project, Use the below command to run the application
 
 Make `API` project as `startup` project and run `API` project
 
+### Photo upload feature
+
+For Photo upload feature to work create a Cloudinary Account and fill the details in appsettings.json file present api project
+
 ## Run UI Application
 
 Navigate to client-app using the below command
@@ -46,7 +50,30 @@ Run the UI project using the below command
 
 Navigating to `http://localhost:3000` from browser should land up in home page
 
-![Home Page](images/home-page.png)
+#### Home Page
+
+![Home Page](images/home.png)
+
+#### Register Page
+
+![Register Page](images/register.png)
+
+#### Login Page
+
+![Login Page](images/login.png)
+
+#### Activities Page
+
+![Activities Page 1](images/activities1.png)
+![Activities Page 2](images/activities2.png)
+
+#### Profile Page
+
+![Profile Page](images/profile.png)
+
+#### Photo Upload Page
+
+![Profile Page](images/photo-upload.png)
 
 ## Additional Info
 
