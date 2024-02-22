@@ -25,7 +25,7 @@ const ActivityDashboard = () => {
     }, [activityRegistry.size, loadActivities]);
 
     return (
-        <><Grid>
+        <Grid>
             <Grid.Column width={10}>
                 {activityStore.loadingInitial && !loadingNext
                     ? <>
@@ -53,7 +53,7 @@ const ActivityDashboard = () => {
                 <Loader active={loadingNext} />
             </Grid.Column>
         </Grid>
-        </>
+
     );
 };
 

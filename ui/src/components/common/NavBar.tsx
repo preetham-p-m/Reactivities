@@ -11,15 +11,14 @@ const NavBar = () => {
         <Menu inverted fixed="top">
             <Container>
                 <Menu.Item as={NavLink} to="/" header>
-                    <img src={assets.LOGO} alt="logo" style={{ marginRight: '10px' }} />
-                    Reactivities
+                    <img src={assets.LOGO} alt="logo" style={{ marginRight: '10px' }} /> Reactivities
                 </Menu.Item>
                 <Menu.Item as={NavLink} to={`/${routerPath.ACTIVITIES}`} name="Activities" />
                 <Menu.Item>
                     <Button positive as={NavLink} to={`/${routerPath.CREATE_ACTIVITY}`}>Create Activity</Button>
                 </Menu.Item>
                 <Menu.Item position="right">
-                    <Image src={user?.image || assets.USER} avatar spaced="right" />
+                    <Image src={user?.image ?? assets.USER} avatar spaced="right" />
                     <Dropdown pointing="top left" text={user?.displayName}>
                         <DropdownMenu>
                             <DropdownItem as={Link} to={`/${routerPath.PROFILE}/${user?.userName}`} text="My Profile" icon="user" />

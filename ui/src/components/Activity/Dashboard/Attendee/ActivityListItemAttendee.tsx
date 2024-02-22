@@ -23,7 +23,7 @@ const ActivityListItemAttendee = ({ attendees }: ActivityListItemAttendeeProps) 
                         <List.Item as={Link} to={`/${routerPath.PROFILE}/${attendee.userName}`} >
                             <Image
                                 size="mini"
-                                circular src={attendee.image || assets.USER}
+                                circular src={attendee.image ?? assets.USER}
                                 bordered
                                 style={attendee.following
                                     ? styles
