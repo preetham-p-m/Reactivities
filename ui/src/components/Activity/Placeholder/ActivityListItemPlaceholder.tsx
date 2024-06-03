@@ -30,4 +30,4 @@ const ActivityListItemPlaceholder = () => {
     );
 };
 
-export default ActivityListItemPlaceholder; 
+export default ActivityListItemPlaceholder;

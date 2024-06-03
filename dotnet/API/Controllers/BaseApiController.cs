@@ -40,7 +40,7 @@ public class BaseApiController : ControllerBase
                 result.Value.PageSize,
                 result.Value.TotalCount,
                 result.Value.TotolPages
-            );
+            ); 
             return Ok(result.Value);
         }
 

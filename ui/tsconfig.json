@@ -16,5 +16,10 @@
         "noEmit": true,
         "jsx": "react-jsx"
     },
-    "include": ["src", "src/Environment.ts"]
+    "include": ["src", "src/Environment.ts"],
+    // "extends": ["eslint:recommended", "plugin:prettier/recommended"],
+    "plugins": ["prettier"],
+    "rules": {
+        "prettier/prettier": "error"
+    }
 }
